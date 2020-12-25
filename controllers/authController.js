@@ -44,3 +44,9 @@ export const login = asyncHandler(async (req, res, next) => {
   req.session.user = user;
   res.status(201).redirect("/");
 });
+
+export const logout = (req, res) => {
+  if (req.session) {
+    req.session.destroy(() => res.redirect("/login"));
+  }
+};

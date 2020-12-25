@@ -1,8 +1,7 @@
 import path from "path";
 import express, { urlencoded } from "express";
 import { requireLogin } from "./middleware.js";
-import loginRouter from "./routes/loginRoutes.js";
-import registerRouter from "./routes/registerRoutes.js";
+import authRouter from "./routes/authRoutes.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import mongoose from "mongoose";
@@ -45,15 +44,14 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", requireLogin, (req, res, next) => {
   const payload = {
-    pageTitle: "home page",
+    pageTitle: "Home page",
     userLoggedIn: req.session.user,
   };
   res.render("home", payload);
 });
 
 // MOUNT ROUTES
-app.use("/login", loginRouter);
-app.use("/register", registerRouter);
+app.use("/", authRouter);
 
 const PORT = process.env.PORT || 5000;
 
