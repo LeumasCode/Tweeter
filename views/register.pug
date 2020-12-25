@@ -3,11 +3,15 @@ extends layouts/login-layout.pug
 block content
     .loginContainer
         h1 Register
+
+        
         form#registerForm(action='/register' method='POST' onsubmit='event.preventDefault(); validateForm();')
-            input(type='text', name='firstName' placeholder='First name' required='' autofocus=true)
-            input(type='text', name='lastName' placeholder='Last name' required='' autofocus=true)
-            input(type='text', name='username' placeholder='Username' required='' autofocus=true)
-            input(type='email', name='email' placeholder='Email' required='' autofocus=true)
+
+            p.errorMessage #{errorMessage}
+            input(type='text', name='firstName' placeholder='First name' value=firstName required='' autofocus=true)
+            input(type='text', name='lastName' placeholder='Last name' value=lastName required='' autofocus=true)
+            input(type='text', name='username' placeholder='Username' value=username required='' autofocus=true)
+            input(type='email', name='email' placeholder='Email' value=email required='' autofocus=true)
             input#password(type='password', name='password' placeholder='Password' required='' autofocus=true)
             input#passwordConfirm(type='password', name='passwordConfirm' placeholder='Confirm Password' required='' autofocus=true)
             input(type="submit" name="" value="Submit")
