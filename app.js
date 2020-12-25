@@ -46,6 +46,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/", requireLogin, (req, res, next) => {
   const payload = {
     pageTitle: "home page",
+    userLoggedIn: req.session.user,
   };
   res.render("home", payload);
 });
@@ -54,6 +55,6 @@ app.get("/", requireLogin, (req, res, next) => {
 app.use("/login", loginRouter);
 app.use("/register", registerRouter);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`listening on port ${PORT}`));

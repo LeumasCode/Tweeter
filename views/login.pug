@@ -3,9 +3,10 @@ extends layouts/login-layout.pug
 block content
     .loginContainer
         h1 Login
-        form(action='#' method='POST')
+        form(action='/login' method='POST')
             
-            input(type='text', name='logUsername' placeholder='Username or Email' required='' autofocus=true)
+            p.errorMessage #{errorMessage}
+            input(type='text', name='logUsername' value=logUsername placeholder='Username or Email' required='' autofocus=true)
             input(type='password', name='logPassword' placeholder='Password' required='')
             input(type="submit" name="" value="Login")
         a(href="/register") Need an account? Register here.
