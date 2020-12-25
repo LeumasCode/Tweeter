@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import validator from 'validator'
+import validator from "validator";
+import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema(
   {
@@ -23,14 +24,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      validate: [validator.isEmail, 'Enter a valid email']
+      validate: [validator.isEmail, "Enter a valid email"],
     },
     image: {
-        type: String,
-        default: '/images/profile.png'
+      type: String,
+      default: "/images/profile.png",
     },
     coverImage: {
-        type: String
+      type: String,
     },
     password: {
       type: String,
@@ -39,6 +40,16 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    
+    next();
+  }
+ this.password = await bcrypt.hash(this.password, 12);
+
+  next()
+});
 
 const User = mongoose.model("User", userSchema);
 

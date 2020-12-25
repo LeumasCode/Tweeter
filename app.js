@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import session from "express-session";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -19,16 +20,26 @@ dotenv.config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: false,
+  })
+);
+
 app.set("view engine", "pug");
 app.set("views", "views");
 
 // connect to db
-mongoose.connect(process.env.DATABASE_LOCAL, {
-  useCreateIndex: true,
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-}).then(()=>console.log('DB connected'));
+mongoose
+  .connect(process.env.DATABASE_LOCAL, {
+    useCreateIndex: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  })
+  .then(() => console.log("DB connected"));
 
 app.use(express.static(path.join(__dirname, "public")));
 
