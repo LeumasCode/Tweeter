@@ -2,6 +2,8 @@ import path from "path";
 import express, { urlencoded } from "express";
 import { requireLogin } from "./middleware.js";
 import authRouter from "./routes/authRoutes.js";
+
+import apiRouter from "./routes/api/posts.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import mongoose from "mongoose";
@@ -52,6 +54,7 @@ app.get("/", requireLogin, (req, res, next) => {
 
 // MOUNT ROUTES
 app.use("/", authRouter);
+app.use("/api/posts", apiRouter);
 
 const PORT = process.env.PORT || 5000;
 
