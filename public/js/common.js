@@ -1,6 +1,6 @@
 $("#postTextarea").keyup(event=>{
-    const textbox = $(event.target)
-   const value = textbox.val().trim()
+    const textBox = $(event.target)
+   const value = textBox.val().trim()
 
    const submitButton = $("#submitPostButton")
 
@@ -12,3 +12,16 @@ $("#postTextarea").keyup(event=>{
    }
      submitButton.prop("disabled", false);
 })
+
+$("#submitPostButton").click(()=>{
+    const button = $(event.target)
+    const textBox = $('#postTextarea')
+
+    const data = {
+        content: textBox.val()
+    }
+
+    $.post("/api/post", data, (postData, status, xhr)=>{
+        
+    })
+});
