@@ -18,7 +18,7 @@ $("#submitPostButton").click(() => {
   const textBox = $("#postTextarea");
 
   const data = {
-    content: textBox.val(),
+    //content: textBox.val(),
   };
 
   $.post("/api/posts", data, (postData, status, xhr) => {
