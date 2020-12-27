@@ -5,6 +5,17 @@ import Post from "../../models/postModel.js";
 
 const router = express.Router();
 
+
+router.get(
+  "/",
+  asyncHandler(async (req, res, next) => {
+   const post = await Post.find()
+
+   res.status(200).send(post)
+  })
+);
+
+
 router.post(
   "/",
   asyncHandler(async (req, res, next) => {
