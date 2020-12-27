@@ -37,7 +37,7 @@ function createPostHtml(postData) {
   const displayName = postedBy.firstName + ' ' + postedBy.lastName
   const timestamp = postData.createdAt
 
-  return `<div class='post>
+  return `<div class='post'>
             <div class='mainContentContainer'>
                 <div class='userImageContainer'>
                     <img src='${postedBy.image}'>
