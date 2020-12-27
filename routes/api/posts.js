@@ -9,7 +9,7 @@ const router = express.Router();
 router.get(
   "/",
   asyncHandler(async (req, res, next) => {
-   const post = await Post.find()
+   const post = await Post.find().populate('postedBy')
 
    res.status(200).send(post)
   })

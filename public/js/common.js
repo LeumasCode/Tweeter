@@ -32,10 +32,14 @@ $("#submitPostButton").click(() => {
 });
 
 function createPostHtml(postData) {
-  const { postedBy,content } = postData;
+  const { postedBy, content } = postData;
 
-  const displayName = postedBy.firstName + ' ' + postedBy.lastName
-  const timestamp = postData.createdAt
+  if (postedBy._id === undefined) {
+    return console.log("user object not populated");
+  }
+
+  const displayName = postedBy.firstName + " " + postedBy.lastName;
+  const timestamp = postData.createdAt;
 
   return `<div class='post'>
             <div class='mainContentContainer'>
