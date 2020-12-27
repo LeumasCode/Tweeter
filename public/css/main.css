@@ -6,10 +6,9 @@
   --blueLight: #9bd1f9;
   --greyText: rgb(101, 119, 134);
   --greyButtonText: rgba(0, 0, 0, 0.34);
-
 }
-*{
-    outline: none !important;
+* {
+  outline: none !important;
 }
 
 a {
@@ -72,7 +71,7 @@ nav a:hover {
   border-radius: 50%;
 }
 
-button{
+button {
   background-color: transparent;
   border: none;
   color: var(--greyButtonText);
@@ -82,57 +81,55 @@ nav a.blue {
   color: var(--blue);
 }
 
-.postFormContainer{
-    display: flex;
-    padding: var(--spacing);
-    border-bottom: 10px solid rgb(230, 236, 240);
-    flex-shrink: 0;
-
+.postFormContainer {
+  display: flex;
+  padding: var(--spacing);
+  border-bottom: 10px solid rgb(230, 236, 240);
+  flex-shrink: 0;
 }
 
-.userImageContainer{
-    width: 50px;
-    height: 50px;
+.userImageContainer {
+  width: 50px;
+  height: 50px;
 }
 
-.userImageContainer img{
-    width: 100%;
-    border-radius: 50%;
-    background-color: #fff;
+.userImageContainer img {
+  width: 100%;
+  border-radius: 50%;
+  background-color: #fff;
 }
 
-.textareaContainer{
-    flex: 1;
-    padding-left: var(--spacing);
-
+.textareaContainer {
+  flex: 1;
+  padding-left: var(--spacing);
 }
 
-.textareaContainer textarea{
-    width: 100%;
-    border: none;
-    resize: none;
-    font-size: 19px;
+.textareaContainer textarea {
+  width: 100%;
+  border: none;
+  resize: none;
+  font-size: 19px;
 }
 
-#submitPostButton{
-    background-color: var(--blue);
-    color: #fff;
-    border: none;
-    border-radius: 40px;
-    padding: 7px 15px;
+#submitPostButton {
+  background-color: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 40px;
+  padding: 7px 15px;
 }
 
-#submitPostButton:disabled{
-    background-color: var(--blueLight);
+#submitPostButton:disabled {
+  background-color: var(--blueLight);
 }
 
 .post {
-display: flex;
-flex-direction: column;
-padding: var(--spacing);
-cursor: pointer;
-border-bottom: 1px solid var(--lightGrey);
-flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing);
+  cursor: pointer;
+  border-bottom: 1px solid var(--lightGrey);
+  flex-shrink: 0;
 }
 
 .mainContentContainer {
@@ -141,31 +138,46 @@ flex-shrink: 0;
 }
 
 .postContentContainer {
-padding-left: var(--spacing);
-display: flex;
-flex-direction: column;
-flex: 1;
+  padding-left: var(--spacing);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-.username, .date {
+.username,
+.date {
   color: var(--greyText);
 }
 
-.displayName{
+.displayName {
   font-weight: bold;
 }
 
-.postFooter{
+.postFooter {
   display: flex;
   align-items: center;
-
 }
 
-.postFooter .postButtonContainer{
+.postFooter .postButtonContainer {
   flex: 1;
   display: flex;
 }
 
-.postFooter .postButtonContainer button{
-  padding: 0 5px;
+.postFooter .postButtonContainer button {
+  padding: 2px 5px;
+}
+
+.header a:hover {
+  text-decoration: underline;
+}
+
+.header a,
+.header span{
+  padding-right: 5px;
+}
+
+.postButtonContainer button:hover{
+  background-color: #d4edff;
+  color: var(--blue);
+  border-radius: 50%;
 }
