@@ -5,14 +5,18 @@ import Post from "../../models/postModel.js";
 
 const router = express.Router();
 
-router.get(
-  "/",
-  asyncHandler(async (req, res, next) => {
-    const post = await Post.find().populate("postedBy").sort({ createdAt: -1 });
-
-    res.status(200).send(post);
-  })
-);
+router.get("/", (req, res, next) => {
+  Post.find()
+    .populate("postedBy")
+    .populate("retweetData")
+    .sort({ createdAt: -1 })
+    .then(async (results) => {
+      results = await User.populate(results, {
+        path: "retweetData.postedBy",
+      });
+      res.status(200).send(results);
+    });
+});
 
 router.post(
   "/",
@@ -69,7 +73,7 @@ router.put(
         new: true,
       }
     );
-    console.log(post);
+    
     res.status(200).send(post);
   })
 );
@@ -90,8 +94,8 @@ router.post(
 
     let rePost = deletedPost;
 
-    if(rePost == null){
-      rePost = await Post.create({postedBy: userId, retweetData: postId})
+    if (rePost == null) {
+      rePost = await Post.create({ postedBy: userId, retweetData: postId });
     }
 
     // insert user retweet
@@ -103,7 +107,7 @@ router.post(
       }
     ); //
 
-  //   // insert post like
+    //   // insert post like
 
     let post = await Post.findByIdAndUpdate(
       postId,
@@ -112,9 +116,9 @@ router.post(
         new: true,
       }
     );
-   
+
     res.status(200).send(post);
-   })
+  })
 );
 
 export default router;
