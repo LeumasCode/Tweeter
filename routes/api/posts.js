@@ -39,4 +39,14 @@ router.post(
   })
 );
 
+router.put(
+  "/:id/like",
+  asyncHandler(async (req, res, next) => {
+
+    
+
+    res.status(200).send("yahoo");
+  })
+);
+
 export default router;
