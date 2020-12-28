@@ -1,6 +1,9 @@
 :root {
   --blue: #1fa2f1;
   --red: rgb(226, 34, 94);
+  --redBackground: rgb(226, 34, 94, 0.1);
+  --green: rgb(23, 191, 99);
+  --greenBackground: rgba(23, 191, 99, 0.1);
   --buttonHoverBg: #d4edff;
   --lightGrey: rgb(230, 236, 240);
   --spacing: 15px;
@@ -182,12 +185,24 @@ nav a.blue {
   padding-right: 5px;
 }
 
-.postButtonContainer button:hover {
-  background-color: #d4edff;
-  color: var(--blue);
-  border-radius: 50%;
+.postButtonContainer button:hover.postButtonContainer.red button.active {
+  color: var(--red);
 }
 
 .postButtonContainer.red button.active {
   color: var(--red);
+}
+
+.postButtonContainer.red button:hover {
+  color: var(--red);
+  background-color: var(--redBackground);
+}
+
+.postButtonContainer.green button.active {
+  color: var(--green);
+}
+
+.postButtonContainer.green button:hover {
+  color: var(--green);
+  background-color: var(--greenBackground);
 }
