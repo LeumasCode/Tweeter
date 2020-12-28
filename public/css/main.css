@@ -77,6 +77,11 @@ button {
   color: var(--greyButtonText);
 }
 
+button i,
+button span {
+  pointer-events: none;
+}
+
 nav a.blue {
   color: var(--blue);
 }
