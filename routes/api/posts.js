@@ -42,8 +42,14 @@ router.post(
 router.put(
   "/:id/like",
   asyncHandler(async (req, res, next) => {
+    const { id } = req.params.id;
+    const { user } = req.session;
 
-    
+    const isLiked = user.likes && user.likes.includes(id)
+
+    // insert user like 
+
+    // insert post like
 
     res.status(200).send("yahoo");
   })
