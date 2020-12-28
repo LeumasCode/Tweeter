@@ -36,6 +36,12 @@ const userSchema = new mongoose.Schema(
         ref: "Post",
       },
     ],
+    retweets: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+      },
+    ],
 
     coverImage: {
       type: String,
