@@ -42,6 +42,8 @@ $(document).on("click", ".likeButton", (event) => {
     type: "PUT",
     success: (postData) => {
       button.find("span").text(postData.likes.length || '');
+
+      
     },
   });
 });
