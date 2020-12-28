@@ -88,28 +88,32 @@ router.post(
 
     let option = deletedPost != null ? "$pull" : "$addToSet";
 
-    return res.send(option)
+    let rePost = deletedPost;
 
-    // insert user like
-  //   req.session.user = await User.findByIdAndUpdate(
-  //     userId,
-  //     { [option]: { likes: postId } },
-  //     {
-  //       new: true,
-  //     }
-  //   ); //
+    if(rePost == null){
+      rePost = await Post.create({postedBy: userId, retweetData: postId})
+    }
+
+    // insert user retweet
+    req.session.user = await User.findByIdAndUpdate(
+      userId,
+      { [option]: { retweets: rePost._id } },
+      {
+        new: true,
+      }
+    ); //
 
   //   // insert post like
 
-  //   let post = await Post.findByIdAndUpdate(
-  //     postId,
-  //     { [option]: { likes: userId } },
-  //     {
-  //       new: true,
-  //     }
-  //   );
-  //   console.log(post);
-  //   res.status(200).send(post);
+    let post = await Post.findByIdAndUpdate(
+      postId,
+      { [option]: { retweetUsers: userId } },
+      {
+        new: true,
+      }
+    );
+   
+    res.status(200).send(post);
    })
 );
 
