@@ -30,6 +30,13 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "/images/image.jpeg",
     },
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+      },
+    ],
+
     coverImage: {
       type: String,
     },

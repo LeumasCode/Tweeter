@@ -5,16 +5,14 @@ import Post from "../../models/postModel.js";
 
 const router = express.Router();
 
-
 router.get(
   "/",
   asyncHandler(async (req, res, next) => {
-   const post = await Post.find().populate('postedBy')
+    const post = await Post.find().populate("postedBy").sort({ createdAt: -1 });
 
-   res.status(200).send(post)
+    res.status(200).send(post);
   })
 );
-
 
 router.post(
   "/",

@@ -46,7 +46,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", requireLogin, (req, res, next) => {
   const payload = {
-    pageTitle: "Home page",
+    pageTitle: "Home",
     userLoggedIn: req.session.user,
   };
   res.render("home", payload);
