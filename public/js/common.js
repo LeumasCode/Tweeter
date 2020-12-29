@@ -198,7 +198,7 @@ function createPostHtml(postData, largeFont = false) {
                     <img src='${postData.postedBy.image}'>
                 </div>
                 <div class='postContentContainer'>
-                    <div class='header'>
+                    <div class='header '>
                         <a href='/profile/${
                           postData.postedBy.username
                         }' class='displayName'>${displayName}</a>
