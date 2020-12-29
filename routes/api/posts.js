@@ -34,12 +34,7 @@ router.get("/:id", async (req, res, next) => {
 router.post(
   "/",
   asyncHandler(async (req, res, next) => {
-    const { content } = req.body;
-
-    if (req.body.replyTo) {
-      console.log(req.body.replyTo);
-      return res.sendStatus(400);
-    }
+    const { content, replyTo } = req.body;
 
     if (!content) {
       console.log("content not sent");
@@ -55,6 +50,7 @@ router.post(
     const post = await Post.create({
       content,
       postedBy: req.session.user,
+      replyTo,
     });
     await post.populate("postedBy").execPopulate();
     res.status(201).send(post);

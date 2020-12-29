@@ -28,6 +28,10 @@ const postSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Post",
     },
+    replyTo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post",
+    },
   },
   { timestamps: true }
 );

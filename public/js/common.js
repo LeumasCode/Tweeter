@@ -33,12 +33,16 @@ $("#submitPostButton, #submitReplyButton").click(() => {
   }
 
   $.post("/api/posts", data, (postData) => {
-    const html = createPostHtml(postData);
-    $(".postsContainer").prepend(html);
+    if (postData.replyTo) {
+      location.reload();
+    } else {
+      const html = createPostHtml(postData);
+      $(".postsContainer").prepend(html);
 
-    textBox.val("");
+      textBox.val("");
 
-    button.prop("disabled", true);
+      button.prop("disabled", true);
+    }
   });
 });
 
