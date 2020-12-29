@@ -101,7 +101,10 @@ nav a.blue {
   border: none;
   padding: 0;
   padding-top: var(--spacing);
-  
+}
+
+.modal .post {
+  padding: 0 0 var(--spacing) 0;
 }
 
 .userImageContainer {
@@ -220,6 +223,6 @@ nav a.blue {
   color: var(--greyText);
   margin-bottom: 5px;
 }
-.postActionContainer a{
- text-decoration: none!important;
+.postActionContainer a {
+  text-decoration: none !important;
 }

@@ -2,9 +2,11 @@ $("#postTextarea, #replyTextarea").keyup((event) => {
   const textBox = $(event.target);
   const value = textBox.val().trim();
 
-  let isModal = textBox.parents('.modal').length==1
+  let isModal = textBox.parents(".modal").length == 1;
 
-  const submitButton = isModal ? $("#submitReplyButton") : $("#submitPostButton");
+  const submitButton = isModal
+    ? $("#submitReplyButton")
+    : $("#submitPostButton");
 
   if (submitButton.length == 0) return alert("No submit button found");
 
@@ -33,17 +35,16 @@ $("#submitPostButton").click(() => {
   });
 });
 
-$("#replyModal").on("show.bs.modal", (event)=>{
+$("#replyModal").on("show.bs.modal", (event) => {
   const button = $(event.relatedTarget);
-  const postId = getPostIdFromElement(button)
+  const postId = getPostIdFromElement(button);
 
   $(document).ready(() => {
     $.get(`/api/posts/${postId}`, (results) => {
-      console.log(results)
+      outputPosts(results, $("#originalPostContainer"));
     });
   });
-
-})
+});
 
 $(document).on("click", ".likeButton", (event) => {
   const button = $(event.target);
@@ -211,5 +212,22 @@ function timeDifference(current, previous) {
     return Math.round(elapsed / msPerMonth) + " months ago";
   } else {
     return Math.round(elapsed / msPerYear) + " years ago";
+  }
+}
+
+function outputPosts(results, container) {
+  container.html("");
+
+  if (!Array.isArray(results)) {
+    results = [results];
+  }
+
+  results.forEach((result) => {
+    const html = createPostHtml(result);
+    container.append(html);
+  });
+
+  if (results.length == 0) {
+    container.append("<span class='noResult'>Nothing to show</span>");
   }
 }
