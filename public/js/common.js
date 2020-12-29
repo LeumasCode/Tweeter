@@ -62,6 +62,20 @@ $("#replyModal").on("hidden.bs.modal", (event) => {
   $("#originalPostContainer").html("");
 });
 
+$("#deletePostModal").on("show.bs.modal", (event) => {
+  const button = $(event.relatedTarget);
+  const postId = getPostIdFromElement(button);
+  $("#deletePostButton").data("id", postId);
+
+  console.log($("#deletePostButton").data().id);
+
+  // $(document).ready(() => {
+  //   $.get(`/api/posts/${postId}`, (results) => {
+  //     outputPosts(results.postData, $("#originalPostContainer"));
+  //   });
+  // });
+});
+
 $(document).on("click", ".likeButton", (event) => {
   const button = $(event.target);
 
@@ -183,10 +197,10 @@ function createPostHtml(postData, largeFont = false) {
               </div>`;
   }
 
-  let buttons = ''
+  let buttons = "";
 
-  if(postData.postedBy._id == userLoggedIn._id){
-    buttons =`<button data-id='${postData._id}' data-toggle='modal' data-target='#deletePostModal'><i class='fas fa-times'></i></button>`
+  if (postData.postedBy._id == userLoggedIn._id) {
+    buttons = `<button data-id='${postData._id}' data-toggle='modal' data-target='#deletePostModal'><i class='fas fa-times'></i></button>`;
   }
 
   return `<div class='post ${largeFontClass}' data-id='${postData._id}'>
