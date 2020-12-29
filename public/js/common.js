@@ -101,7 +101,8 @@ function createPostHtml(postData) {
   //   return console.log("user object not populated");
   // }
 
-  const displayName = postData.postedBy.firstName + " " + postData.postedBy.lastName;
+  const displayName =
+    postData.postedBy.firstName + " " + postData.postedBy.lastName;
   const timestamp = timeDifference(new Date(), new Date(postData.createdAt));
 
   const likeButtonActiveClass = postData.likes.includes(userLoggedIn._id)
@@ -146,7 +147,7 @@ function createPostHtml(postData) {
                     </div>
                     <div class='postFooter'>
                         <div class='postButtonContainer'>
-                            <button>
+                            <button data-toggle='modal' data-target='#replyModal'>
                                 <i class='far fa-comment'></i>
                             </button>
                         </div>
