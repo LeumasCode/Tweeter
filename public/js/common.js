@@ -152,7 +152,24 @@ function createPostHtml(postData) {
     retweetText = `<span>
                       <i class='fas fa-retweet'></i>
                       Retweeted by <a href='/profile/${retweetedBy}'>@${retweetedBy}</a>
-                      </span>`;
+                    </span>`;
+  }
+
+  let replyFlag = "";
+  if (postData.replyTo) {
+    if (!postData.replyTo._id) {
+      return alert("replyTo is not pupulated");
+    } else if (!postData.replyTo.postedBy._id) {
+      return alert("posted By is not pupulated");
+    }
+
+    console.log(postData);
+    let replyToUsername = postData.replyTo.postedBy.username;
+
+    replyFlag = `<div class='replyFlag'>
+                  Replying to <a href='/profile/${replyToUsername}'>@${replyToUsername}</a>
+
+              </div>`;
   }
 
   return `<div class='post' data-id='${postData._id}'>
@@ -173,6 +190,7 @@ function createPostHtml(postData) {
                         }</span>
                         <span class='date'>${timestamp}</span>
                     </div>
+                   ${replyFlag}
                     <div class='postBody'>
                     <span>${postData.content}</span>
                     </div>

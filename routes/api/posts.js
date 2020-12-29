@@ -9,8 +9,11 @@ const getPosts = async (filter) => {
   let results = await Post.find(filter)
     .populate("postedBy")
     .populate("retweetData")
+    .populate("replyTo")
     .sort({ createdAt: -1 });
-
+results = await User.populate(results, {
+  path: "replyTo.postedBy",
+});
   return await User.populate(results, {
     path: "retweetData.postedBy",
   });
