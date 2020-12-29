@@ -5,21 +5,36 @@ import Post from "../../models/postModel.js";
 
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
-  Post.find()
+const getPosts = async () => {
+  let results = await Post.find()
     .populate("postedBy")
     .populate("retweetData")
-    .sort({ createdAt: -1 })
-    .then(async (results) => {
-      results = await User.populate(results, {
-        path: "retweetData.postedBy",
-      });
-      res.status(200).send(results);
-    });
+    .sort({ createdAt: -1 });
+
+  return await User.populate(results, {
+    path: "retweetData.postedBy",
+  });
+};
+
+router.get("/", async(req, res, next) => {
+
+  const results = await getPosts();
+
+  res.status(200).send(results);
 });
 
 router.get("/:id", (req, res, next) => {
   res.send("this is awesome");
+  const getPosts = async () => {
+    let results = await Post.find()
+      .populate("postedBy")
+      .populate("retweetData")
+      .sort({ createdAt: -1 });
+
+    return await User.populate(results, {
+      path: "retweetData.postedBy",
+    });
+  };
 });
 
 router.post(
