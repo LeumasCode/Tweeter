@@ -236,9 +236,12 @@ nav a.blue {
   text-decoration: none;
 }
 
-
 .replyFlag a:hover {
   color: var(--blue);
   text-decoration: underline;
 }
 
+.post.largeFont .postBody,
+.post.largeFont .postFooter {
+  font-size: 23px;
+}

@@ -124,7 +124,7 @@ function getPostIdFromElement(element) {
   return postId;
 }
 
-function createPostHtml(postData) {
+function createPostHtml(postData, largeFont = false) {
   if (postData == null) alert("post object is null");
 
   let isRetweet = postData.retweetData !== undefined;
@@ -155,6 +155,8 @@ function createPostHtml(postData) {
     ? "active"
     : "";
 
+  let largeFontClass = largeFont ? "largeFont" : "";
+
   let retweetText = "";
 
   if (isRetweet) {
@@ -181,7 +183,13 @@ function createPostHtml(postData) {
               </div>`;
   }
 
-  return `<div class='post' data-id='${postData._id}'>
+  let buttons = ''
+
+  if(postData.postedBy._id == userLoggedIn._id){
+    buttons =`<button data-id='${postData._id}' data-toggle='modal' data-target='#deletePostModal'><i class='fas fa-times'></i></button>`
+  }
+
+  return `<div class='post ${largeFontClass}' data-id='${postData._id}'>
             <div class='postActionContainer'>
               ${retweetText}
             </div>
@@ -198,6 +206,7 @@ function createPostHtml(postData) {
                           postData.postedBy.username
                         }</span>
                         <span class='date'>${timestamp}</span>
+                        ${buttons}
                     </div>
                    ${replyFlag}
                     <div class='postBody'>
@@ -275,20 +284,19 @@ function outputPosts(results, container) {
   }
 }
 
-
-const outputPostsWithReplies = (results, container)=> {
+const outputPostsWithReplies = (results, container) => {
   container.html("");
 
-  if(results.replyTo !== undefined && results.replyTo._id !== undefined){
-     const html = createPostHtml(results.replyTo);
-     container.append(html);
+  if (results.replyTo !== undefined && results.replyTo._id !== undefined) {
+    const html = createPostHtml(results.replyTo);
+    container.append(html);
   }
 
-  const mainPostHtml = createPostHtml(results.postData);
+  const mainPostHtml = createPostHtml(results.postData, true);
   container.append(mainPostHtml);
 
   results.replies.forEach((result) => {
     const html = createPostHtml(result);
     container.append(html);
   });
-}
+};
