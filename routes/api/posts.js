@@ -18,6 +18,10 @@ router.get("/", (req, res, next) => {
     });
 });
 
+router.get("/:id", (req, res, next) => {
+  res.send("this is awesome");
+});
+
 router.post(
   "/",
   asyncHandler(async (req, res, next) => {
@@ -73,7 +77,7 @@ router.put(
         new: true,
       }
     );
-    
+
     res.status(200).send(post);
   })
 );
