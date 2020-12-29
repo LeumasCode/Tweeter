@@ -104,6 +104,15 @@ $(document).on("click", ".retweetButton", (event) => {
   });
 });
 
+$(document).on("click", ".post", (event) => {
+  let element = $(event.target);
+  const postId = getPostIdFromElement(element);
+
+  if (postId !== undefined && !element.is("button")) {
+    window.location.href = `/post/${postId}`;
+  }
+});
+
 function getPostIdFromElement(element) {
   const isRoot = element.hasClass("post");
   const rootElement = isRoot ? element : element.closest(".post");
