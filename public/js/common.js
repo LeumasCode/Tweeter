@@ -109,7 +109,7 @@ $(document).on("click", ".post", (event) => {
   const postId = getPostIdFromElement(element);
 
   if (postId !== undefined && !element.is("button")) {
-    window.location.href = `/post/${postId}`;
+    window.location.href = `/posts/${postId}`;
   }
 });
 
