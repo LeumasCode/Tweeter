@@ -11,9 +11,9 @@ const getPosts = async (filter) => {
     .populate("retweetData")
     .populate("replyTo")
     .sort({ createdAt: -1 });
-results = await User.populate(results, {
-  path: "replyTo.postedBy",
-});
+  results = await User.populate(results, {
+    path: "replyTo.postedBy",
+  });
   return await User.populate(results, {
     path: "retweetData.postedBy",
   });
@@ -27,11 +27,20 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
-  let results = await getPosts({ _id: id });
-  results = results[0];
+  let postData = await getPosts({ _id: id });
+  postData = postData[0];
 
-  console.log(results);
-  res.status(200).send(results);
+  let result = {
+    postData,
+  };
+
+  if (postData.replyTo !== undefined) {
+    result.replyTo = postData.replyTo;
+  }
+
+  result.replies = await getPosts({ replyTo: id });
+
+  res.status(200).send(result);
 });
 
 router.post(

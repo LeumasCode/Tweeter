@@ -53,7 +53,7 @@ $("#replyModal").on("show.bs.modal", (event) => {
 
   $(document).ready(() => {
     $.get(`/api/posts/${postId}`, (results) => {
-      outputPosts(results, $("#originalPostContainer"));
+      outputPosts(results.postData, $("#originalPostContainer"));
     });
   });
 });
@@ -165,7 +165,7 @@ function createPostHtml(postData) {
   }
 
   let replyFlag = "";
-  if (postData.replyTo) {
+  if (postData.replyTo && postData.replyTo._id) {
     if (!postData.replyTo._id) {
       return alert("replyTo is not pupulated");
     } else if (!postData.replyTo.postedBy._id) {
@@ -273,4 +273,22 @@ function outputPosts(results, container) {
   if (results.length == 0) {
     container.append("<span class='noResult'>Nothing to show</span>");
   }
+}
+
+
+const outputPostsWithReplies = (results, container)=> {
+  container.html("");
+
+  if(results.replyTo !== undefined && results.replyTo._id !== undefined){
+     const html = createPostHtml(results.replyTo);
+     container.append(html);
+  }
+
+  const mainPostHtml = createPostHtml(results.postData);
+  container.append(mainPostHtml);
+
+  results.replies.forEach((result) => {
+    const html = createPostHtml(result);
+    container.append(html);
+  });
 }

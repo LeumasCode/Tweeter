@@ -57,7 +57,7 @@ app.get("/", requireLogin, (req, res, next) => {
 // MOUNT ROUTES
 app.use("/", authRouter);
 app.use("/api/posts", apiRouter);
-app.use("/posts", postRouter);
+app.use("/posts",requireLogin, postRouter);
 
 const PORT = process.env.PORT || 5000;
 
