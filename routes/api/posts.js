@@ -36,6 +36,11 @@ router.post(
   asyncHandler(async (req, res, next) => {
     const { content } = req.body;
 
+    if (req.body.replyTo) {
+      console.log(req.body.replyTo);
+      return res.sendStatus(400);
+    }
+
     if (!content) {
       console.log("content not sent");
       return res.sendStatus(400);
