@@ -5,6 +5,8 @@ import authRouter from "./routes/authRoutes.js";
 
 import apiRouter from "./routes/api/posts.js";
 import postRouter from "./routes/postRoutes.js";
+import profileRouter from "./routes/profileRoutes.js";
+
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import mongoose from "mongoose";
@@ -58,6 +60,7 @@ app.get("/", requireLogin, (req, res, next) => {
 app.use("/", authRouter);
 app.use("/api/posts", apiRouter);
 app.use("/posts",requireLogin, postRouter);
+app.use("/profile", requireLogin, profileRouter);
 
 const PORT = process.env.PORT || 5000;
 

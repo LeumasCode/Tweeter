@@ -147,4 +147,11 @@ router.post(
   })
 );
 
+router.delete("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  await Post.findByIdAndDelete(id);
+
+  res.status(204).send();
+});
+
 export default router;

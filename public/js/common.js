@@ -66,17 +66,16 @@ $("#deletePostModal").on("show.bs.modal", (event) => {
   const button = $(event.relatedTarget);
   const postId = getPostIdFromElement(button);
   $("#deletePostButton").data("id", postId);
-
 });
 
-$("#deletePostButton").click((event)=>{
-  let postId = $(event.target).data('id')
+$("#deletePostButton").click((event) => {
+  let postId = $(event.target).data("id");
 
   $.ajax({
     url: `api/posts/${postId}`,
     type: "DELETE",
     success: (postData) => {
-     location.reload()
+      location.reload();
     },
   });
 });
@@ -193,7 +192,6 @@ function createPostHtml(postData, largeFont = false) {
       return alert("posted By is not pupulated");
     }
 
-    console.log(postData);
     let replyToUsername = postData.replyTo.postedBy.username;
 
     replyFlag = `<div class='replyFlag'>
