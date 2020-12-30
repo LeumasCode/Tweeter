@@ -21,14 +21,18 @@ router.get("/:username", async (req, res, next) => {
 });
 
 async function getPayload(username, userLoggedIn) {
-  const user = await User.findOne({ username });
+  let user = await User.findOne({ username });
 
   if (user == null) {
-    return {
-      pageTitle: "User not found",
-      userLoggedIn,
-      userLoggedInJs: JSON.stringify(userLoggedIn),
-    };
+    user = await User.findById(username);
+
+    if (user == null) {
+      return {
+        pageTitle: "User not found",
+        userLoggedIn,
+        userLoggedInJs: JSON.stringify(userLoggedIn),
+      };
+    }
   }
 
   return {
