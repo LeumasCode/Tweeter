@@ -254,18 +254,17 @@ nav a.blue {
   flex: 1;
 }
 
-.errorMessage{
+.errorMessage {
   padding: var(--spacing);
 }
 
-.profileHeaderContainer .coverPhotoContainer{
+.profileHeaderContainer .coverPhotoContainer {
   height: 180px;
   background-color: var(--blue);
   position: relative;
-
 }
 
-.profileHeaderContainer .userImageContainer{
+.profileHeaderContainer .userImageContainer {
   height: 132px;
   width: 132px;
   margin-left: var(--spacing);
@@ -273,18 +272,18 @@ nav a.blue {
   bottom: -66px;
 }
 
-.profileHeaderContainer .userImageContainer img{
- border: 4px solid #fff;
+.profileHeaderContainer .userImageContainer img {
+  border: 4px solid #fff;
 }
 
-.profileHeaderContainer .profileButtonsContainer{
+.profileHeaderContainer .profileButtonsContainer {
   text-align: right;
   padding: var(--spacing);
   min-height: 66px;
 }
 
 .profileButton,
-.followButton{
+.followButton {
   border: 1px solid var(--blue);
   color: var(--blue);
   font-weight: bold;
@@ -292,41 +291,70 @@ nav a.blue {
   border-radius: 60px;
   display: inline-block;
   margin-left: var(--spacing);
-
 }
 
-.profileButton:hover
-.followButton:hover{
+.profileButton:hover .followButton:hover {
   background-color: var(--blueBackground);
 }
 
-.followButton.following{
+.followButton.following {
   background-color: var(--blue);
   color: #fff;
 }
 
 .profileHeaderContainer .userDetailsContainer {
-display: flex;
-flex-direction: column;
-padding: 0 var(--spacing);
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--spacing);
 }
 
-.followersContainer .value{
+.followersContainer .value {
   font-weight: bold;
   margin-right: 5px;
 }
 
-.followersContainer span:not(.value){
- color: var(--greyText);
+.followersContainer span:not(.value) {
+  color: var(--greyText);
 }
 
-.followersContainer a{
+.followersContainer a {
   margin-right: 15px;
   text-decoration: none;
-
 }
 
-.followersContainer a:hover{
+.followersContainer a:hover {
   border-bottom: 1px solid #000;
-  
+}
+
+.tabsContainer {
+  display: flex;
+  border-bottom: 1px solid var(--lightGrey);
+  flex-shrink: 0;
+}
+
+.tabsContainer a {
+  text-decoration: none;
+}
+.tab {
+  flex: 1;
+  height: 52px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--greyText);
+  font-weight: bold;
+}
+
+.tab a {
+  text-decoration: none;
+}
+
+.tab.active {
+  color: var(--blue);
+  border-bottom: 2px solid var(--blue);
+}
+
+.tab:hover {
+  color: var(--blue);
+  background-color: var(--blueBackground);
 }
