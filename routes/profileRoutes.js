@@ -12,12 +12,11 @@ router.get("/", (req, res, next) => {
     profileUser: req.session.user,
   };
 
-  
   res.status(200).render("profilePage", payload);
 });
 
 router.get("/:username", async (req, res, next) => {
-  const payload = await getPayload(req.params.username, req.session.user)
+  const payload = await getPayload(req.params.username, req.session.user);
   res.status(200).render("profilePage", payload);
 });
 
@@ -31,8 +30,6 @@ async function getPayload(username, userLoggedIn) {
       userLoggedInJs: JSON.stringify(userLoggedIn),
     };
   }
-
-
 
   return {
     pageTitle: user.username,
