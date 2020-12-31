@@ -62,6 +62,6 @@ app.use("/api/posts", apiRouter);
 app.use("/posts",requireLogin, postRouter);
 app.use("/profile", requireLogin, profileRouter);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => console.log(`listening on port ${PORT}`));

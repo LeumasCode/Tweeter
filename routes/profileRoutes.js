@@ -17,6 +17,14 @@ router.get("/", (req, res, next) => {
 
 router.get("/:username", async (req, res, next) => {
   const payload = await getPayload(req.params.username, req.session.user);
+ 
+  res.status(200).render("profilePage", payload);
+});
+
+
+router.get("/:username/replies", async (req, res, next) => {
+  const payload = await getPayload(req.params.username, req.session.user);
+   payload.selectedTab = "replies";
   res.status(200).render("profilePage", payload);
 });
 
