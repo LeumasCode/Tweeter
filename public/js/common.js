@@ -90,7 +90,6 @@ $(document).on("click", ".likeButton", (event) => {
     url: `api/posts/${postId}/like`,
     type: "PUT",
     success: (postData) => {
-      
       button.find("span").text(postData.likes.length || "");
 
       if (postData.likes.includes(userLoggedIn._id)) {
@@ -133,26 +132,24 @@ $(document).on("click", ".post", (event) => {
 });
 
 $(document).on("click", ".followButton", (event) => {
-  let button = $(event.target)
-  let userId = button.data().user
-  
+  let button = $(event.target);
+  let userId = button.data().user;
 
   $.ajax({
     url: `api/users/${userId}/follow`,
     type: "PUT",
-    success: (data) => {
+    success: (data, status, xhr) => {
+      if (xhr.status == 404) {
+        return alert("User not found");
+      }
 
-      console.log(data)
-      // button.find("span").text(postData.likes.length || "");
-
-      // if (postData.likes.includes(userLoggedIn._id)) {
-      //   button.addClass("active");
-      // } else {
-      //   button.removeClass("active");
-      // }
+      if (data.following && data.following.includes(userId)) {
+        button.addClass("following");
+      } else {
+        button.removeClass("following");
+      }
     },
   });
-
 });
 
 function getPostIdFromElement(element) {

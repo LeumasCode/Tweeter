@@ -10,7 +10,7 @@ router.put("/:userId/follow", async (req, res, next) => {
 
   let user = await User.findById(userId);
 
-  if (!user) {
+  if (user == null) {
     return res.sendStatus(404);
   }
 
@@ -25,9 +25,9 @@ router.put("/:userId/follow", async (req, res, next) => {
     {
       new: true,
     }
-  ); //
+  ).catch((err) => console.log(err)); //
 
-  User.findByIdAndUpdate(userId, {
+  await User.findByIdAndUpdate(userId, {
     [option]: { followers: req.session.user._id },
   }); //
 
