@@ -3,6 +3,7 @@ import asyncHandler from "express-async-handler";
 import User from "../../models/userModel.js";
 import Post from "../../models/postModel.js";
 
+
 const router = express.Router();
 
 const getPosts = async (filter) => {
@@ -20,7 +21,15 @@ const getPosts = async (filter) => {
 };
 
 router.get("/", async (req, res, next) => {
-  const results = await getPosts({});
+  let searchObj = req.query;
+  if(searchObj.isReply !== undefined){
+    let isReply =searchObj.isReply =='true'
+
+    searchObj.replyTo ={$exists: isReply }
+    delete searchObj.isReply
+    console.log(searchObj)
+  }
+  const results = await getPosts(searchObj);
 
   res.status(200).send(results);
 });
