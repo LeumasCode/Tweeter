@@ -4,35 +4,38 @@ block content
    if !profileUser
         span.errorMessage Check the url you are trying to access
     
-   else 
-    .profileHeaderContainer
-        .coverPhotoContainer
+   else
+        script.
+            let profileUserId = '!{profileUser._id}'
 
-            .userImageContainer
-                img(src=profileUser.image, alt='User Profile image')
-        .profileButtonsContainer
-            if profileUser._id == userLoggedIn._id
-                a.profileButton(href=`/messages/${profileUser._id}`)
-                    i.fas.fa-envelope
-                +createFollowButton(profileUser, true)
-        .userDetailsContainer
-            span.displayName #{profileUser.firstName} #{profileUser.lastName}
-            span.username @#{profileUser.username}
-            span.description #{profileUser.description} 
+        .profileHeaderContainer
+            .coverPhotoContainer
 
-            .followersContainer
-                a(href=`/profile/${profileUser.username}/following`)
-                    span.value #{0}
-                    span Following
-                a(href=`/profile/${profileUser.username}/followers`)
-                    span.value #{0}
-                    span Followers
+                .userImageContainer
+                    img(src=profileUser.image, alt='User Profile image')
+            .profileButtonsContainer
+                if profileUser._id == userLoggedIn._id
+                    a.profileButton(href=`/messages/${profileUser._id}`)
+                        i.fas.fa-envelope
+                    +createFollowButton(profileUser, true)
+            .userDetailsContainer
+                span.displayName #{profileUser.firstName} #{profileUser.lastName}
+                span.username @#{profileUser.username}
+                span.description #{profileUser.description} 
 
-    .tabsContainer
-        +createTab('Posts', `/profile/${profileUser.username}`, true)
-        +createTab('Replies', `/profile/${profileUser.username}/replies`, false)
+                .followersContainer
+                    a(href=`/profile/${profileUser.username}/following`)
+                        span.value #{0}
+                        span Following
+                    a(href=`/profile/${profileUser.username}/followers`)
+                        span.value #{0}
+                        span Followers
 
-    +createPostModals(userLoggedIn)
+        .tabsContainer
+            +createTab('Posts', `/profile/${profileUser.username}`, true)
+            +createTab('Replies', `/profile/${profileUser.username}/replies`, false)
+        .postsContainer
+            +createPostModals(userLoggedIn)
 
 block scripts
    script(src='/js/profile.js')
