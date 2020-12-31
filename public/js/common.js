@@ -90,6 +90,7 @@ $(document).on("click", ".likeButton", (event) => {
     url: `api/posts/${postId}/like`,
     type: "PUT",
     success: (postData) => {
+      
       button.find("span").text(postData.likes.length || "");
 
       if (postData.likes.includes(userLoggedIn._id)) {
@@ -129,6 +130,29 @@ $(document).on("click", ".post", (event) => {
   if (postId !== undefined && !element.is("button")) {
     window.location.href = `/posts/${postId}`;
   }
+});
+
+$(document).on("click", ".followButton", (event) => {
+  let button = $(event.target)
+  let userId = button.data().user
+  
+
+  $.ajax({
+    url: `api/users/${userId}/follow`,
+    type: "PUT",
+    success: (data) => {
+
+      console.log(data)
+      // button.find("span").text(postData.likes.length || "");
+
+      // if (postData.likes.includes(userLoggedIn._id)) {
+      //   button.addClass("active");
+      // } else {
+      //   button.removeClass("active");
+      // }
+    },
+  });
+
 });
 
 function getPostIdFromElement(element) {

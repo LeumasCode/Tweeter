@@ -3,7 +3,8 @@ import express, { urlencoded } from "express";
 import { requireLogin } from "./middleware.js";
 import authRouter from "./routes/authRoutes.js";
 
-import apiRouter from "./routes/api/posts.js";
+import apiPostRouter from "./routes/api/posts.js";
+import apiUserRouter from "./routes/api/users.js";
 import postRouter from "./routes/postRoutes.js";
 import profileRouter from "./routes/profileRoutes.js";
 
@@ -58,10 +59,11 @@ app.get("/", requireLogin, (req, res, next) => {
 
 // MOUNT ROUTES
 app.use("/", authRouter);
-app.use("/api/posts", apiRouter);
-app.use("/posts",requireLogin, postRouter);
+app.use("/api/posts", apiPostRouter);
+app.use("/profile/api/users", apiUserRouter);
+app.use("/posts", requireLogin, postRouter);
 app.use("/profile", requireLogin, profileRouter);
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`listening on port ${PORT}`));
