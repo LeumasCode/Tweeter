@@ -142,11 +142,19 @@ $(document).on("click", ".followButton", (event) => {
       if (xhr.status == 404) {
         return alert("User not found");
       }
-
+      let difference = 1;
       if (data.following && data.following.includes(userId)) {
         button.addClass("following");
       } else {
         button.removeClass("following");
+        difference =-1
+      }
+
+      let followersLabel = $("#followersValue");
+      if (followersLabel.length != 0) {
+        let followersText = followersLabel.text();
+        followersText = parseInt(followersText);
+        followersLabel.text(followersText + difference);
       }
     },
   });
