@@ -27,7 +27,7 @@ function outputUsers(results, container) {
 }
 
 function createUserHtml(userData, showFollowButton) {
-  let name = userData.firstName + "" + userData.lastName;
+  let name = userData.firstName + " " + userData.lastName;
   return `<div class='user'>
                 <div class='userImageContainer'>
                     <img src='${userData.image}'>
