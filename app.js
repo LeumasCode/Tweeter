@@ -60,7 +60,7 @@ app.get("/", requireLogin, (req, res, next) => {
 // MOUNT ROUTES
 app.use("/", authRouter);
 app.use("/api/posts", apiPostRouter);
-app.use("/profile/api/users", apiUserRouter);
+app.use("/api/profile/users", apiUserRouter);
 app.use("/posts", requireLogin, postRouter);
 app.use("/profile", requireLogin, profileRouter);
 
