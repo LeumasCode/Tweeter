@@ -1,12 +1,12 @@
 function loadFollowers() {
-  $.get(`/api/profile/users/${profileUserId}/followers`, (results) => {
+  $.get(`/api/users/${profileUserId}/followers`, (results) => {
     outputUsers(results.followers, $(".resultsContainer"));
   });
 }
 
 function loadFollowing() {
   $.get(
-    `/api/profile/users/${profileUserId}/following`,
+    `/api/users/${profileUserId}/following`,
 
     (results) => {
       outputUsers(results.following, $(".resultsContainer"));
@@ -28,6 +28,18 @@ function outputUsers(results, container) {
 
 function createUserHtml(userData, showFollowButton) {
   let name = userData.firstName + " " + userData.lastName;
+
+  let isFollowing = userLoggedIn.following && userLoggedIn.following.includes(userData._id);
+
+   let text = isFollowing ? "Following" : "Follow"
+    let buttonClass = isFollowing ? "followButton following" : "followButton"
+
+  let followButton = ''
+  if(showFollowButton && userLoggedIn._id != userData._id){
+      followButton = `<div class='followButtonContainer'>
+                        <button class= '${buttonClass}' data-user= '${userData._id}'>${text}</button>
+                    </div>`
+  }
   return `<div class='user'>
                 <div class='userImageContainer'>
                     <img src='${userData.image}'>
@@ -38,6 +50,7 @@ function createUserHtml(userData, showFollowButton) {
                         <span class='username'>@${userData.username}</span>
                     </div>
                 </div>
+                ${followButton}
             </div>`;
 }
 
