@@ -72,7 +72,7 @@ mixin createImageUploadModal()
                     button.close(type='button', data-dismiss='modal', aria-label='Close')
                     span(aria-hidden='true') &times;
                 .modal-body
-                   p You won't be able to delete this.
+                   input#filePhoto(type="file", name="image")
                 .modal-footer
                     button.btn.btn-secondary(type='button', data-dismiss='modal') Cancel
                     button#imageUploadButton.btn.btn-primary(type='button') Save
