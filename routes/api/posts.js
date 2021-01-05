@@ -32,7 +32,14 @@ router.get("/", async (req, res, next) => {
     let followingOnly = searchObj.followingOnly == "true";
 
     if (followingOnly) {
-      let objectIds = req.session.user.following;
+      let objectIds = [];
+      if (!req.session.user.following) {
+        req.session.user.following = [];
+      }
+      
+      req.session.user.following.forEach((user) => {
+        objectIds.push(user);
+      });
 
       objectIds.push(req.session.user._id);
 
