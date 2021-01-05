@@ -106,22 +106,30 @@ $("#filePhoto").change(function () {
   }
 });
 
-$('#imageUploadButton').click(()=>{
-  let canvas = cropper.getCroppedCanvas()
+$("#imageUploadButton").click(() => {
+  let canvas = cropper.getCroppedCanvas();
 
-  if(canvas == null){
-    alert('could not load image, try again')
-    return
+  if (canvas == null) {
+    alert("could not load image, try again");
+    return;
   }
 
-  canvas.toBlob((blob)=> {
+  canvas.toBlob((blob) => {
     let formData = new FormData();
 
-    formData.append('croppedImage', blob)
+    formData.append("croppedImage", blob);
 
-    console.log(formData)
-  })
-})
+    $.ajax({
+      url: "/api/users/profilePicture",
+      type: "POST",
+      processData: false,
+      contentType: false,
+      success: () => {
+        location.reload();
+      },
+    });
+  });
+});
 
 $(document).on("click", ".likeButton", (event) => {
   const button = $(event.target);
