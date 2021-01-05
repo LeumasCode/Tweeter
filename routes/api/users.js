@@ -83,13 +83,15 @@ router.post(
 
     let targetPath = path.join(__dirname, `../../${filePath}`);
 
-    fs.rename(tempPath, targetPath, (error) => {
+    fs.rename(tempPath, targetPath, async(error) => {
       if (error != null) {
         console.log(error);
         return res.sendStatus(400);
       }
-      
-      res.status(200).send();
+
+    req.session.user = await User.findByIdAndUpdate(req.session.user._id, {image: filePath}, {new: true})
+
+      res.status(204).send();
     });
   })
 );

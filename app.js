@@ -7,6 +7,7 @@ import apiPostRouter from "./routes/api/posts.js";
 import apiUserRouter from "./routes/api/users.js";
 import postRouter from "./routes/postRoutes.js";
 import profileRouter from "./routes/profileRoutes.js";
+import uploadRouter from "./routes/uploadRoutes.js";
 
 import { fileURLToPath } from "url";
 import { dirname } from "path";
@@ -63,6 +64,7 @@ app.use("/api/posts", apiPostRouter);
 app.use("/api/users", apiUserRouter);
 app.use("/posts", requireLogin, postRouter);
 app.use("/profile", requireLogin, profileRouter);
+app.use("/uploads", uploadRouter);
 
 const PORT = process.env.PORT || 5000;
 
