@@ -397,6 +397,12 @@ nav a.blue {
   display: none;
 }
 
-.userImageContainer:hover .profilePictureButton{
-display: block;
+.userImageContainer:hover .profilePictureButton {
+  display: block;
+}
+
+#imagePreview {
+  display: block;
+  width: 100%;
+  max-width: 100%;
 }

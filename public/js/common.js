@@ -1,3 +1,6 @@
+// globals
+let cropper;
+
 $("#postTextarea, #replyTextarea").keyup((event) => {
   const textBox = $(event.target);
   const value = textBox.val().trim();
@@ -80,6 +83,29 @@ $("#deletePostButton").click((event) => {
   });
 });
 
+$("#filePhoto").change(function () {
+  if (this.files && this.files[0]) {
+    let reader = new FileReader();
+
+    reader.onload = (e) => {
+      let image = document.getElementById("imagePreview");
+
+      image.src = e.target.result;
+
+      if (cropper !== undefined) {
+        cropper.destroy();
+      }
+
+      cropper = new Cropper(image, {
+        aspectRatio: 1 / 1,
+        background: false,
+      });
+    };
+
+    reader.readAsDataURL(this.files[0]);
+  }
+});
+
 $(document).on("click", ".likeButton", (event) => {
   const button = $(event.target);
 
@@ -147,7 +173,7 @@ $(document).on("click", ".followButton", (event) => {
         button.addClass("following");
       } else {
         button.removeClass("following");
-        difference =-1
+        difference = -1;
       }
 
       let followersLabel = $("#followersValue");
