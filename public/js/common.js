@@ -106,6 +106,23 @@ $("#filePhoto").change(function () {
   }
 });
 
+$('#imageUploadButton').click(()=>{
+  let canvas = cropper.getCroppedCanvas()
+
+  if(canvas == null){
+    alert('could not load image, try again')
+    return
+  }
+
+  canvas.toBlob((blob)=> {
+    let formData = new FormData();
+
+    formData.append('croppedImage', blob)
+
+    console.log(formData)
+  })
+})
+
 $(document).on("click", ".likeButton", (event) => {
   const button = $(event.target);
 
