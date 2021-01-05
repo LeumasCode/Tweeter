@@ -274,6 +274,9 @@ nav a.blue {
   margin-left: var(--spacing);
   position: absolute;
   bottom: -66px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .profileHeaderContainer .userImageContainer img {
@@ -363,26 +366,37 @@ nav a.blue {
   background-color: var(--blueBackground);
 }
 
-.noResults{
+.noResults {
   padding: var(--spacing);
 }
 
-.resultsContainer{
+.resultsContainer {
   display: flex;
   flex-direction: column;
 }
 
-.resultsContainer .user{
+.resultsContainer .user {
   padding: var(--spacing);
   display: flex;
   border-bottom: 1px solid var(--lightGrey);
 }
 
-.user .userDetailsContainer{
+.user .userDetailsContainer {
   flex: 1;
   padding: 0 var(--spacing);
 }
 
-.userDetailsContainer .header a{
+.userDetailsContainer .header a {
   text-decoration: none;
+}
+
+.profilePictureButton {
+  position: absolute;
+  font-size: 50px;
+  color: rgba(0, 0, 0, 0.6);
+  display: none;
+}
+
+.userImageContainer:hover .profilePictureButton{
+display: block;
 }
