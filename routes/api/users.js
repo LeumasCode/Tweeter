@@ -1,8 +1,15 @@
 import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import fs from "fs";
 import asyncHandler from "express-async-handler";
 import User from "../../models/userModel.js";
 import Post from "../../models/postModel.js";
 import multer from "multer";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const router = express.Router();
 
@@ -61,7 +68,8 @@ router.get(
 const upload = multer({ dest: "uploads/" });
 
 router.post(
-  "/profilePicture", upload.single('croppedImage'),
+  "/profilePicture",
+  upload.single("croppedImage"),
   asyncHandler(async (req, res, next) => {
     if (!req.file) {
       console.log("no file uploaded");
@@ -69,9 +77,20 @@ router.post(
       return;
     }
 
-  
+    let filePath = `/uploads/images/${req.file.filename}.png`;
 
-    res.status(200).send();
+    let tempPath = req.file.path;
+
+    let targetPath = path.join(__dirname, `../../${filePath}`);
+
+    fs.rename(tempPath, targetPath, (error) => {
+      if (error != null) {
+        console.log(error);
+        return res.sendStatus(400);
+      }
+      
+      res.status(200).send();
+    });
   })
 );
 
