@@ -124,6 +124,7 @@ $("#imageUploadButton").click(() => {
       type: "POST",
       processData: false,
       contentType: false,
+      data: formData,
       success: () => {
         location.reload();
       },

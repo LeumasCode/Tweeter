@@ -2,6 +2,7 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import User from "../../models/userModel.js";
 import Post from "../../models/postModel.js";
+import multer from "multer";
 
 const router = express.Router();
 
@@ -38,10 +39,10 @@ router.get(
   "/:userId/following",
   asyncHandler(async (req, res, next) => {
     let userId = req.params.userId;
-    console.log(userId)
+    console.log(userId);
 
     let user = await User.findById(userId).populate("following");
-console.log(user)
+    console.log(user);
     res.status(200).send(user);
   })
 );
@@ -57,5 +58,21 @@ router.get(
   })
 );
 
+const upload = multer({ dest: "uploads/" });
+
+router.post(
+  "/profilePicture", upload.single('croppedImage'),
+  asyncHandler(async (req, res, next) => {
+    if (!req.file) {
+      console.log("no file uploaded");
+      res.sendStatus(400);
+      return;
+    }
+
+  
+
+    res.status(200).send();
+  })
+);
 
 export default router;
