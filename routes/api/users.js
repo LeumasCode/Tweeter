@@ -96,4 +96,39 @@ router.post(
   })
 );
 
+
+router.post(
+  "/coverPhoto",
+  upload.single("croppedImage"),
+  asyncHandler(async (req, res, next) => {
+    if (!req.file) {
+      console.log("no file uploaded");
+      res.sendStatus(400);
+      return;
+    }
+
+    let filePath = `/uploads/images/${req.file.filename}.png`;
+
+    let tempPath = req.file.path;
+
+    let targetPath = path.join(__dirname, `../../${filePath}`);
+
+    fs.rename(tempPath, targetPath, async (error) => {
+      if (error != null) {
+        console.log(error);
+        return res.sendStatus(400);
+      }
+
+      req.session.user = await User.findByIdAndUpdate(
+        req.session.user._id,
+        { coverPhoto: filePath },
+        { new: true }
+      );
+
+      res.status(204).send();
+    });
+  })
+);
+
+
 export default router;

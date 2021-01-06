@@ -156,6 +156,32 @@ $("#imageUploadButton").click(() => {
 });
 
 
+$("#coverPhotoUploadButton").click(() => {
+  let canvas = cropper.getCroppedCanvas();
+
+  if (canvas == null) {
+    alert("could not load image, try again");
+    return;
+  }
+
+  canvas.toBlob((blob) => {
+    let formData = new FormData();
+
+    formData.append("croppedImage", blob);
+
+    $.ajax({
+      url: "/api/users/coverPhoto",
+      type: "POST",
+      processData: false,
+      contentType: false,
+      data: formData,
+      success: () => {
+        location.reload();
+      },
+    });
+  });
+});
+
 
 $(document).on("click", ".likeButton", (event) => {
   const button = $(event.target);

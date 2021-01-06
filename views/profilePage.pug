@@ -15,6 +15,8 @@ block content
         .profileHeaderContainer
             .coverPhotoSection
                 .coverPhotoContainer
+                    if profileUser.coverPhoto
+                        img(src=profileUser.coverPhoto, alt="user's cover photo")
                     if profileUser._id == userLoggedIn._id
                         button.coverPhotoButton(data-toggle='modal', data-target= '#coverPhotoUploadModal')
                             i.fas.fa-camera

@@ -57,7 +57,7 @@ const userSchema = new mongoose.Schema(
       },
     ],
 
-    coverImage: {
+    coverPhoto: {
       type: String,
     },
     password: {
