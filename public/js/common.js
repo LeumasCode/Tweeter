@@ -106,6 +106,29 @@ $("#filePhoto").change(function () {
   }
 });
 
+$("#coverPhoto").change(function () {
+  if (this.files && this.files[0]) {
+    let reader = new FileReader();
+
+    reader.onload = (e) => {
+      let image = document.getElementById("coverPreview");
+
+      image.src = e.target.result;
+
+      if (cropper !== undefined) {
+        cropper.destroy();
+      }
+
+      cropper = new Cropper(image, {
+        aspectRatio: 16 / 9,
+        background: false,
+      });
+    };
+
+    reader.readAsDataURL(this.files[0]);
+  }
+});
+
 $("#imageUploadButton").click(() => {
   let canvas = cropper.getCroppedCanvas();
 
@@ -131,6 +154,8 @@ $("#imageUploadButton").click(() => {
     });
   });
 });
+
+
 
 $(document).on("click", ".likeButton", (event) => {
   const button = $(event.target);
