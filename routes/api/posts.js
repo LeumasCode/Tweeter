@@ -36,7 +36,7 @@ router.get("/", async (req, res, next) => {
       if (!req.session.user.following) {
         req.session.user.following = [];
       }
-      
+
       req.session.user.following.forEach((user) => {
         objectIds.push(user);
       });
@@ -181,5 +181,20 @@ router.delete("/:id", async (req, res, next) => {
 
   res.status(204).send();
 });
+
+router.put(
+  "/:id",
+  asyncHandler(async (req, res, next) => {
+    if (req.body.pinned !== undefined) {
+      await Post.updateMany({ postedBy: req.session.user }, { pinned: false });
+    }
+    const { id } = req.params;
+
+
+    await Post.findByIdAndUpdate(id, req.body, );
+
+    res.status(204).send();
+  })
+);
 
 export default router;

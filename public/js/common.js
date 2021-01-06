@@ -71,12 +71,31 @@ $("#deletePostModal").on("show.bs.modal", (event) => {
   $("#deletePostButton").data("id", postId);
 });
 
+$("#confirmPinModal").on("show.bs.modal", (event) => {
+  const button = $(event.relatedTarget);
+  const postId = getPostIdFromElement(button);
+  $("#pinPostButton").data("id", postId);
+});
+
 $("#deletePostButton").click((event) => {
   let postId = $(event.target).data("id");
 
   $.ajax({
     url: `api/posts/${postId}`,
     type: "DELETE",
+    success: (postData) => {
+      location.reload();
+    },
+  });
+});
+
+$("#pinPostButton").click((event) => {
+  let postId = $(event.target).data("id");
+
+  $.ajax({
+    url: `api/posts/${postId}`,
+    type: "PUT",
+    data: { pinned: true },
     success: (postData) => {
       location.reload();
     },
@@ -155,7 +174,6 @@ $("#imageUploadButton").click(() => {
   });
 });
 
-
 $("#coverPhotoUploadButton").click(() => {
   let canvas = cropper.getCroppedCanvas();
 
@@ -181,7 +199,6 @@ $("#coverPhotoUploadButton").click(() => {
     });
   });
 });
-
 
 $(document).on("click", ".likeButton", (event) => {
   const button = $(event.target);
