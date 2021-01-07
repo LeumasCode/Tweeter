@@ -24,7 +24,13 @@ $("#searchBox").keydown((e) => {
 function search(searchTerm, searchType){
     let url = searchType == 'users' ? '/api/users' : '/api/posts'
 
-    $.get(url, {search: searchTerm}, (result)=>{
-        console.log(result)
+    $.get(url, {search: searchTerm}, (results)=>{
+        
+
+        if(searchType == 'users'){
+
+        }else{
+            outputPosts(results, $('.resultContainer'))
+        }
     })
 }
