@@ -28,6 +28,11 @@ router.get("/", async (req, res, next) => {
     delete searchObj.isReply;
   }
 
+  if (searchObj.search !== undefined) {
+    searchObj.content = { $regex: searchObj.search, $options: "i" };
+    delete searchObj.search;
+  }
+
   if (searchObj.followingOnly !== undefined) {
     let followingOnly = searchObj.followingOnly == "true";
 
@@ -190,8 +195,7 @@ router.put(
     }
     const { id } = req.params;
 
-
-    await Post.findByIdAndUpdate(id, req.body, );
+    await Post.findByIdAndUpdate(id, req.body);
 
     res.status(204).send();
   })

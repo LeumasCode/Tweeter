@@ -15,7 +15,16 @@ $("#searchBox").keydown((e) => {
       if(value==''){
           $('.resultContainer').html('')
       }else{
-          console.log(value)
+         search(value, searchType)
       }
   }, 1000);
 });
+
+
+function search(searchTerm, searchType){
+    let url = searchType == 'users' ? '/api/users' : '/api/posts'
+
+    $.get(url, {search: searchTerm}, (result)=>{
+        console.log(result)
+    })
+}
