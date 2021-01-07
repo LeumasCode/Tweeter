@@ -13,6 +13,27 @@ const __dirname = dirname(__filename);
 
 const router = express.Router();
 
+router.get(
+  "/",
+  asyncHandler(async (req, res, next) => {
+    let searchObj = req.query;
+
+    if (searchObj.search !== undefined) {
+      searchObj = {
+        $or: [
+          { firstName: { $regex: searchObj.search, $options: "i" } },
+          { lastName: { $regex: searchObj.search, $options: "i" } },
+          { username: { $regex: searchObj.search, $options: "i" } },
+        ],
+      };
+    }
+
+    const users = await User.find(searchObj);
+
+    res.status(200).send(users);
+  })
+);
+
 router.put("/:userId/follow", async (req, res, next) => {
   let userId = req.params.userId;
 
@@ -83,19 +104,22 @@ router.post(
 
     let targetPath = path.join(__dirname, `../../${filePath}`);
 
-    fs.rename(tempPath, targetPath, async(error) => {
+    fs.rename(tempPath, targetPath, async (error) => {
       if (error != null) {
         console.log(error);
         return res.sendStatus(400);
       }
 
-    req.session.user = await User.findByIdAndUpdate(req.session.user._id, {image: filePath}, {new: true})
+      req.session.user = await User.findByIdAndUpdate(
+        req.session.user._id,
+        { image: filePath },
+        { new: true }
+      );
 
       res.status(204).send();
     });
   })
 );
-
 
 router.post(
   "/coverPhoto",
@@ -129,6 +153,5 @@ router.post(
     });
   })
 );
-
 
 export default router;

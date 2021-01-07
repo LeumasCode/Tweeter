@@ -10,27 +10,24 @@ $("#searchBox").keydown((e) => {
   let searchType = textBox.data().search;
 
   timer = setTimeout(() => {
-      value = textBox.val().trim()
+    value = textBox.val().trim();
 
-      if(value==''){
-          $('.resultContainer').html('')
-      }else{
-         search(value, searchType)
-      }
+    if (value == "") {
+      $(".resultContainer").html("");
+    } else {
+      search(value, searchType);
+    }
   }, 1000);
 });
 
+function search(searchTerm, searchType) {
+  let url = searchType == "users" ? "/api/users" : "/api/posts";
 
-function search(searchTerm, searchType){
-    let url = searchType == 'users' ? '/api/users' : '/api/posts'
-
-    $.get(url, {search: searchTerm}, (results)=>{
-        
-
-        if(searchType == 'users'){
-
-        }else{
-            outputPosts(results, $('.resultContainer'))
-        }
-    })
+  $.get(url, { search: searchTerm }, (results) => {
+    if (searchType == "users") {
+      console.log(results);
+    } else {
+      outputPosts(results, $(".resultContainer"));
+    }
+  });
 }
