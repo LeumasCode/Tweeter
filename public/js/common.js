@@ -1,6 +1,7 @@
 // globals
 let cropper;
 let timer;
+let selectedUsers = [];
 
 $("#postTextarea, #replyTextarea").keyup((event) => {
   const textBox = $(event.target);
@@ -175,7 +176,7 @@ $("#userSearchTextbox").keydown((e) => {
 
   let value = textBox.val();
 
-  if(value == '' && e.keycode == 8){
+  if (value == "" && e.keycode == 8) {
     // remove user from selection
     return;
   }
@@ -190,8 +191,6 @@ $("#userSearchTextbox").keydown((e) => {
     }
   }, 1000);
 });
-
-
 
 $("#imageUploadButton").click(() => {
   let canvas = cropper.getCroppedCanvas();
@@ -524,8 +523,6 @@ const outputPostsWithReplies = (results, container) => {
   });
 };
 
-
-
 function outputUsers(results, container) {
   container.html("");
 
@@ -567,24 +564,34 @@ function createUserHtml(userData, showFollowButton) {
             </div>`;
 }
 
-
-function searchUsers(searchTerm){
-  $.get("/api/users", {search: searchTerm}, results=>{
-    outputSelectableUsers(results, $('.resultsContainer'))
-  })
+function searchUsers(searchTerm) {
+  $.get("/api/users", { search: searchTerm }, (results) => {
+    outputSelectableUsers(results, $(".resultsContainer"));
+  });
 }
 
 function outputSelectableUsers(results, container) {
   container.html("");
 
   results.forEach((result) => {
-    if(result._id == userLoggedIn._id ) {
+    if (result._id == userLoggedIn._id) {
       return;
     }
     let html = createUserHtml(result, true);
-    container.append(html);
+    let element = $(html);
+    element.click(() => userSelected(result));
+
+    container.append(element);
   });
   if (results.length == 0) {
     container.append("<span class='noResults'>No results found</span>");
   }
+}
+
+function userSelected(user) {
+  selectedUsers.push(user);
+  $("#userSearchTextbox").val("").focus();
+  $(".resultsContainer").html("");
+
+  $("#createChatButton").prop("disabled", false);
 }
