@@ -593,8 +593,25 @@ function outputSelectableUsers(results, container) {
 
 function userSelected(user) {
   selectedUsers.push(user);
+  updateSelectedUsersHtml();
+  
   $("#userSearchTextbox").val("").focus();
   $(".resultsContainer").html("");
 
   $("#createChatButton").prop("disabled", false);
+}
+
+function updateSelectedUsersHtml() {
+  let elements = [];
+
+  selectedUsers.forEach((user) => {
+    let name = user.firstName + " " + user.lastName;
+
+    let userElement = $(`<span class='selectedUser'>${name}</span>`);
+    elements.push(userElement);
+  });
+
+  $(".selectedUser").remove();
+
+  $("#selectedUsers").prepend(elements);
 }
