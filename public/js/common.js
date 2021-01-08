@@ -176,8 +176,14 @@ $("#userSearchTextbox").keydown((e) => {
 
   let value = textBox.val();
 
-  if (value == "" && e.keycode == 8) {
+  if (value == "" && (e.which == 8 || e.keyCode == 8)) {
     // remove user from selection
+    selectedUsers.pop();
+    updateSelectedUsersHtml();
+    $(".resultsContainer").html("");
+    if (selectedUsers.length == 0) {
+      $("#createChatButton").prop("disabled", true);
+    }
     return;
   }
 
@@ -580,7 +586,7 @@ function outputSelectableUsers(results, container) {
     ) {
       return;
     }
-    let html = createUserHtml(result, true);
+    let html = createUserHtml(result, false);
     let element = $(html);
     element.click(() => userSelected(result));
 
@@ -594,7 +600,7 @@ function outputSelectableUsers(results, container) {
 function userSelected(user) {
   selectedUsers.push(user);
   updateSelectedUsersHtml();
-  
+
   $("#userSearchTextbox").val("").focus();
   $(".resultsContainer").html("");
 
