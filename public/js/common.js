@@ -1,5 +1,6 @@
 // globals
 let cropper;
+let timer;
 
 $("#postTextarea, #replyTextarea").keyup((event) => {
   const textBox = $(event.target);
@@ -166,6 +167,31 @@ $("#coverPhoto").change(function () {
     reader.readAsDataURL(this.files[0]);
   }
 });
+
+$("#userSearchTextbox").keydown((e) => {
+  clearTimeout(timer);
+
+  let textBox = $(e.target);
+
+  let value = textBox.val();
+
+  if(value == '' && e.keycode == 8){
+    // remove user from selection
+    return;
+  }
+
+  timer = setTimeout(() => {
+    value = textBox.val().trim();
+
+    if (value == "") {
+      $(".resultsContainer").html("");
+    } else {
+      searchUsers(value);
+    }
+  }, 1000);
+});
+
+
 
 $("#imageUploadButton").click(() => {
   let canvas = cropper.getCroppedCanvas();
@@ -539,4 +565,9 @@ function createUserHtml(userData, showFollowButton) {
                 </div>
                 ${followButton}
             </div>`;
+}
+
+
+function searchUsers(searchTerm){
+  
 }
