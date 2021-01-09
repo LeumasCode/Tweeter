@@ -198,6 +198,14 @@ $("#userSearchTextbox").keydown((e) => {
   }, 1000);
 });
 
+$("#createChatButton").click(() => {
+  const data = JSON.stringify(selectedUsers)
+
+  $.post('/api/chats', {users: data}, chat=>{
+    window.location.href= `/messages/${chat._id}`;
+  })
+});
+
 $("#imageUploadButton").click(() => {
   let canvas = cropper.getCroppedCanvas();
 
