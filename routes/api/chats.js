@@ -42,9 +42,9 @@ router.post(
 router.get(
   "/",
   asyncHandler(async (req, res, next) => {
-    const chats = await Chat.find({
+    let chats = await Chat.find({
       users: { $elemMatch: { $eq: req.session.user._id } },
-    });
+    }).populate("users");
 
     res.status(200).send(chats);
   })
