@@ -21,9 +21,9 @@ let image = ''; // to do later
 let latestMessage = 'this is latest message'
 
 return `<a href='/messages/${chatData._id}' class='resultListItem'>
-            <div class='resultDetailsContainer'>
+            <div class='resultsDetailsContainer'>
                 <span class='heading'>${chatName}</span>
-                <span class='heading'>${latestMessage}</span>
+                <span class='subText'>${latestMessage}</span>
             </div>
 
         </a>`;

@@ -462,10 +462,9 @@ nav a.blue {
   display: flex;
   flex-direction: column;
   min-height: 0;
-
 }
 
-.chatTitleBar{
+.chatTitleBar {
   border-bottom: 1px solid var(--lightGrey);
   display: flex;
   align-items: center;
@@ -473,18 +472,18 @@ nav a.blue {
   padding: 10px;
 }
 
-.chatTitleBar label{
+.chatTitleBar label {
   margin: 0 10px 0 0;
 }
 
-#userSearchTextbox{
+#userSearchTextbox {
   border: none;
   flex: 1;
   font-weight: 200px;
   min-width: 350px;
 }
 
-#createChatButton{
+#createChatButton {
   border: none;
   background-color: var(--blue);
   color: #fff;
@@ -493,12 +492,12 @@ nav a.blue {
   border-radius: 40px;
 }
 
-#createChatButton:disabled{
+#createChatButton:disabled {
   background-color: var(--lightGrey);
   color: var(--greyText);
 }
 
-.selectedUser{
+.selectedUser {
   font-weight: 300;
   background-color: #cbe5fe;
   color: #0084ff;
@@ -506,4 +505,32 @@ nav a.blue {
   border-radius: 3px;
   margin: 5px 5px 0 0;
   display: inline-block;
+}
+
+.resultListItem {
+  padding: 7px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--lightGrey);
+  text-decoration: none;
+}
+
+.resultListItem:hover {
+  background-color: #f2f2f2;
+}
+
+.resultsDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.resultsDetailsContainer .heading {
+  font-weight: 500;
+}
+
+.resultsDetailsContainer .subText {
+  color: var(--greyText);
+  font-size: 14px;
 }
