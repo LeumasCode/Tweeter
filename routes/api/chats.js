@@ -39,4 +39,15 @@ router.post(
   })
 );
 
+router.get(
+  "/",
+  asyncHandler(async (req, res, next) => {
+    const chats = await Chat.find({
+      users: { $elemMatch: { $eq: req.session.user._id } },
+    });
+
+    res.status(200).send(chats);
+  })
+);
+
 export default router;
