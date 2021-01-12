@@ -44,7 +44,7 @@ router.get(
   asyncHandler(async (req, res, next) => {
     let chats = await Chat.find({
       users: { $elemMatch: { $eq: req.session.user._id } },
-    }).populate("users");
+    }).populate("users").sort({updatedAt: -1})
 
     res.status(200).send(chats);
   })

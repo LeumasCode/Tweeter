@@ -199,11 +199,11 @@ $("#userSearchTextbox").keydown((e) => {
 });
 
 $("#createChatButton").click(() => {
-  const data = JSON.stringify(selectedUsers)
+  const data = JSON.stringify(selectedUsers);
 
-  $.post('/api/chats', {users: data}, chat=>{
-    window.location.href= `/messages/${chat._id}`;
-  })
+  $.post("/api/chats", { users: data }, (chat) => {
+    window.location.href = `/messages/${chat._id}`;
+  });
 });
 
 $("#imageUploadButton").click(() => {
@@ -314,7 +314,7 @@ $(document).on("click", ".followButton", (event) => {
   let userId = button.data().user;
 
   $.ajax({
-    url: `api/users/${userId}/follow`,
+    url: `http://localhost:5000/api/users/${userId}/follow`,
     type: "PUT",
     success: (data, status, xhr) => {
       if (xhr.status == 404) {
