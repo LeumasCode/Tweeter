@@ -6,6 +6,7 @@ import authRouter from "./routes/authRoutes.js";
 import apiPostRouter from "./routes/api/posts.js";
 import apiUserRouter from "./routes/api/users.js";
 import apiChatRouter from "./routes/api/chats.js";
+import apiMessageRouter from "./routes/api/messages.js";
 import postRouter from "./routes/postRoutes.js";
 import profileRouter from "./routes/profileRoutes.js";
 import uploadRouter from "./routes/uploadRoutes.js";
@@ -66,6 +67,7 @@ app.use("/", authRouter);
 app.use("/api/posts", apiPostRouter);
 app.use("/api/users", apiUserRouter);
 app.use("/api/chats", apiChatRouter);
+app.use("/api/messages", apiMessageRouter);
 
 app.use("/posts", requireLogin, postRouter);
 app.use("/profile", requireLogin, profileRouter);
