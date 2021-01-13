@@ -41,5 +41,7 @@ function messageSubmitted() {
 }
 
 function sendMessage(content) {
-  console.log(content);
+  $.post("http://localhost:5000/api/messages", {content, chatId}, (data, status, xhr)=>{
+    console.log(data)
+  });
 }
