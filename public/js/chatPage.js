@@ -26,10 +26,20 @@ $(".sendMessageButton").click(() => {
 });
 
 $(".inputTextbox").keydown((event) => {
-  if (event.which === 13 && !event.shiftKey) {
+  if (event.which === 13) {
     messageSubmitted();
     return false;
   }
 });
 
-function messageSubmitted() {}
+function messageSubmitted() {
+  let content = $(".inputTextbox").val().trim();
+  if (content != "") {
+    sendMessage(content);
+    $(".inputTextbox").val("");
+  }
+}
+
+function sendMessage(content) {
+  console.log(content);
+}
