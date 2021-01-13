@@ -52,6 +52,17 @@ router.get(
   })
 );
 
+router.get(
+  "/:chatId",
+  asyncHandler(async (req, res, next) => {
+    let chats = await Chat.findOne({
+      _id: req.params.chatId,
+      users: { $elemMatch: { $eq: req.session.user._id } },
+    }).populate("users");
+    res.status(200).send(chats);
+  })
+);
+
 router.put(
   "/:chatId",
   asyncHandler(async (req, res, next) => {
