@@ -44,9 +44,20 @@ router.get(
   asyncHandler(async (req, res, next) => {
     let chats = await Chat.find({
       users: { $elemMatch: { $eq: req.session.user._id } },
-    }).populate("users").sort({updatedAt: -1})
+    })
+      .populate("users")
+      .sort({ updatedAt: -1 });
 
     res.status(200).send(chats);
+  })
+);
+
+router.put(
+  "/:chatId",
+  asyncHandler(async (req, res, next) => {
+    let chats = await Chat.findByIdAndUpdate(req.params.chatId, req.body);
+
+    res.sendStatus(204);
   })
 );
 
