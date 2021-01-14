@@ -21,6 +21,11 @@ router.post(
 
    let message = await Message.create(newMessage)
 
+   message = await message.populate('sender').execPopulate()
+   message = await message.populate("chat").execPopulate();
+
+
+
     res.status(201).send(message);
   })
 );
