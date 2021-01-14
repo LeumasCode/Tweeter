@@ -2,6 +2,7 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import User from "../../models/userModel.js";
 import Chat from "../../models/chatModel.js";
+import Message from "../../models/messageModel.js";
 
 const router = express.Router();
 
@@ -46,8 +47,10 @@ router.get(
       users: { $elemMatch: { $eq: req.session.user._id } },
     })
       .populate("users")
+      .populate("latestMessage")
       .sort({ updatedAt: -1 });
 
+    chats = await User.populate(chats, { path: "latestMessage.sender" });
     res.status(200).send(chats);
   })
 );
@@ -60,6 +63,16 @@ router.get(
       users: { $elemMatch: { $eq: req.session.user._id } },
     }).populate("users");
     res.status(200).send(chats);
+  })
+);
+
+router.get(
+  "/:chatId/messages",
+  asyncHandler(async (req, res, next) => {
+    let message = await Message.find({
+      chat: req.params.chatId,
+    }).populate("sender");
+    res.status(200).send(message);
   })
 );
 

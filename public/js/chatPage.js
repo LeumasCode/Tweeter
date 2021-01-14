@@ -2,6 +2,10 @@ $(document).ready(() => {
   $.get(`http://localhost:5000/api/chats/${chatId}`, (data) => {
     $("#chatName").text(getChatName(data));
   });
+
+  $.get(`http://localhost:5000/api/chats/${chatId}/messages`, (data)=>{
+    console.log(data)
+  });
 });
 
 $("#chatNameButton").click(() => {

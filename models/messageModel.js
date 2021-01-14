@@ -9,15 +9,13 @@ const messageSchema = new mongoose.Schema(
     },
     chat: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Chat'
+      ref: "Chat",
     },
-    sender: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: "User" 
+    sender: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
-    readBy: {
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    },
+    readBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );
