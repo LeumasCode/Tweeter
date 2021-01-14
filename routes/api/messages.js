@@ -14,7 +14,6 @@ router.post(
       return res.sendStatus(400);
     }
 
-    console.log(chatId);
 
     let newMessage = {
       sender: req.session.user._id,

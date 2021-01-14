@@ -3,8 +3,17 @@ $(document).ready(() => {
     $("#chatName").text(getChatName(data));
   });
 
-  $.get(`http://localhost:5000/api/chats/${chatId}/messages`, (data)=>{
-    console.log(data)
+  $.get(`http://localhost:5000/api/chats/${chatId}/messages`, (data) => {
+    let messages = [];
+
+    data.forEach((message) => {
+      let html = createMessageHtml(message);
+      messages.push(html);
+    });
+
+    let messagesHtml = messages.join("");
+
+    addMessagesHtmlToPage(messagesHtml);
   });
 });
 
@@ -36,6 +45,12 @@ $(".inputTextbox").keydown((event) => {
   }
 });
 
+function addMessagesHtmlToPage(html) {
+  $(".chatMessages").append(html);
+
+  // scroll to the bottom
+}
+
 function messageSubmitted() {
   let content = $(".inputTextbox").val().trim();
   if (content != "") {
@@ -45,16 +60,16 @@ function messageSubmitted() {
 }
 
 function sendMessage(content) {
+  
   $.post(
     "http://localhost:5000/api/messages",
     { content, chatId },
     (data, status, xhr) => {
-      if(xhr.status != 201){
-        alert('could not send messages')
-        $('.inputTextbox').val(content)
+      if (xhr.status != 201) {
+        alert("could not send messages");
+        $(".inputTextbox").val(content);
         return;
       }
-
 
       addChatMessageHtml(data);
     }
@@ -69,7 +84,7 @@ function addChatMessageHtml(message) {
 
   let messageDiv = createMessageHtml(message);
 
-  $('.chatMessages').append(messageDiv)
+  addMessagesHtmlToPage(messageDiv);
 }
 
 function createMessageHtml(message) {
