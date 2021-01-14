@@ -45,6 +45,13 @@ function sendMessage(content) {
     "http://localhost:5000/api/messages",
     { content, chatId },
     (data, status, xhr) => {
+      if(xhr.status != 201){
+        alert('could not send messages')
+        $('.inputTextbox').val(content)
+        return;
+      }
+
+
       addChatMessageHtml(data);
     }
   );
