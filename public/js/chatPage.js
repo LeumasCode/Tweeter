@@ -41,7 +41,33 @@ function messageSubmitted() {
 }
 
 function sendMessage(content) {
-  $.post("http://localhost:5000/api/messages", {content, chatId}, (data, status, xhr)=>{
-    console.log(data)
-  });
+  $.post(
+    "http://localhost:5000/api/messages",
+    { content, chatId },
+    (data, status, xhr) => {
+      addChatMessageHtml(data);
+    }
+  );
+}
+
+function addChatMessageHtml(message) {
+  if (!message && !message._id) {
+    alert("message is not valid");
+    return;
+  }
+
+  let messageDiv = createMessageHtml(message);
+
+  $('.chatMessages').append(messageDiv)
+}
+
+function createMessageHtml(message) {
+  let isMine = message.sender._id == userLoggedIn._id;
+  let liClassMine = isMine ? "mine" : "theirs";
+
+  return `<li class='message ${liClassMine}'>
+            <div class="messageContainer">
+                <span class="messageBody">${message.content}</span>
+            </div>
+          </li>`;
 }
