@@ -116,11 +116,24 @@ let nameElement = "";
     }
   }
 
+  let profileImage =''
+
   if (isLast) {
     liClassMine += " last";
+
+    profileImage = `<img src='${sender.image}'>`
+  }
+
+  let imageContainer = ''
+
+  if(!isMine){
+    imageContainer = `<div class='imageContainer'>
+                        ${profileImage}
+                      </div>`
   }
 
   return `<li class='message ${liClassMine}'>
+            ${imageContainer}
             <div class="messageContainer">
               ${nameElement}
                 <span class="messageBody">${message.content}</span>
