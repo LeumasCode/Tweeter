@@ -1,6 +1,9 @@
 $(document).ready(() => {
-socket.emit('join room', chatId)
+  socket.emit("join room", chatId);
 
+  socket.on("typing", () => {
+    console.log("user typing");
+  });
 
   $.get(`http://localhost:5000/api/chats/${chatId}`, (data) => {
     $("#chatName").text(getChatName(data));
@@ -26,7 +29,7 @@ socket.emit('join room', chatId)
 
     $(".loadingSpinnerContainer").remove();
 
-    $(".chatContainer").css("visibility", 'visible');
+    $(".chatContainer").css("visibility", "visible");
   });
 });
 
@@ -52,11 +55,17 @@ $(".sendMessageButton").click(() => {
 });
 
 $(".inputTextbox").keydown((event) => {
+  updateTyping();
+
   if (event.which === 13) {
     messageSubmitted();
     return false;
   }
 });
+
+function updateTyping() {
+  socket.emit("typing", chatId);
+}
 
 function addMessagesHtmlToPage(html) {
   $(".chatMessages").append(html);
