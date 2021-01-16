@@ -1,5 +1,6 @@
 import path from "path";
 import express, { urlencoded } from "express";
+import * as io from "socket.io";
 import { requireLogin } from "./middleware.js";
 import authRouter from "./routes/authRoutes.js";
 
@@ -77,4 +78,11 @@ app.use("/messages", requireLogin, messagesRouter);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log(`listening on port ${PORT}`));
+const server = app.listen(PORT, () => console.log(`listening on port ${PORT}`));
+
+//instantiate socket io
+
+const socketio = new io.Server(server, { pingTimeout: 60000 });
+
+
+socketio.on('connection', socket=> console.log('connected to socket io'))
