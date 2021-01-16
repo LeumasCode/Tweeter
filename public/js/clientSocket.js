@@ -7,3 +7,10 @@ socket.emit("setup", userLoggedIn);
 socket.on("connected", () => {
   connected = true;
 });
+
+
+socket.on("message received", (newMessage ) => {
+ return messageReceived(newMessage)
+});
+
+

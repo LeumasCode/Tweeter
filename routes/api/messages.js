@@ -14,7 +14,6 @@ router.post(
       return res.sendStatus(400);
     }
 
-
     let newMessage = {
       sender: req.session.user._id,
       content: req.body.content,
@@ -25,6 +24,7 @@ router.post(
 
     message = await message.populate("sender").execPopulate();
     message = await message.populate("chat").execPopulate();
+    message = await User.populate(message, { path: "chat.users" });
 
     Chat.findByIdAndUpdate(req.body.chatId, { latestMessage: message });
 
