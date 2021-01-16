@@ -1,4 +1,7 @@
 $(document).ready(() => {
+socket.emit('join room', chatId)
+
+
   $.get(`http://localhost:5000/api/chats/${chatId}`, (data) => {
     $("#chatName").text(getChatName(data));
   });
