@@ -84,28 +84,35 @@ const server = app.listen(PORT, () => console.log(`listening on port ${PORT}`));
 
 const socketio = new io.Server(server, { pingTimeout: 60000 });
 
+socketio.on("connection", (socket) => {
+  socket.on("setup", (userData) => {
+    socket.join(userData._id);
+    socket.emit("connected");
+  });
 
-socketio.on('connection', socket=>{
-  socket.on('setup', userData =>{
-    socket.join(userData._id)
-    socket.emit('connected')
-  })
-
-  socket.on('join room', room =>{
+  socket.on("join room", (room) => {
     socket.join(room);
-    
-  })
+  });
 
-   socket.on("typing", (room) => {
-     socket.in(room);
-     socket.emit('typing')
-   });
+  socket.on("typing", (room) => {
+    socket.in(room);
+    socket.emit("typing");
+  });
 
-   socket.on("stop typing", (room) => {
-     socket.in(room);
-     socket.emit("stop typing");
-   });
-})
+  socket.on("stop typing", (room) => {
+    socket.in(room);
+    socket.emit("stop typing");
+  });
 
+  socket.on("new message", (newMessage) => {
+    let chat = newMessage.chat;
 
+    if (!chat.users) return console.log("chat.user not defined");
 
+    chat.users.forEach((user) => {
+      if (user._id == newMessage.sender._id) return;
+
+      socket.in(user._id).emit("message received", newMessage);
+    });
+  });
+});
