@@ -100,6 +100,11 @@ socketio.on('connection', socket=>{
      socket.in(room);
      socket.emit('typing')
    });
+
+   socket.on("stop typing", (room) => {
+     socket.in(room);
+     socket.emit("stop typing");
+   });
 })
 
 
