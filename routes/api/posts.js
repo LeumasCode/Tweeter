@@ -2,6 +2,7 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import User from "../../models/userModel.js";
 import Post from "../../models/postModel.js";
+import Notification from "../../models/notificationModel.js";
 
 const router = express.Router();
 
@@ -92,12 +93,25 @@ router.post(
       return;
     }
 
-    const post = await Post.create({
+    let post = await Post.create({
       content,
       postedBy: req.session.user,
       replyTo,
     });
-    await post.populate("postedBy").execPopulate();
+
+    post = await User.populate( post, {path: 'postedBy'})
+
+    post = await Post.populate(post, { path: "replyTo" })
+
+
+     if (post.replyTo !== undefined) {
+       await Notification.insertNotification(
+         post.replyTo.postedBy,
+         req.session.user._id,
+         "reply",
+         post._id
+       );
+     }
     res.status(201).send(post);
   })
 );
@@ -132,6 +146,15 @@ router.put(
         new: true,
       }
     );
+
+    if (!isLiked) {
+      await Notification.insertNotification(
+        post.postedBy,
+        userId,
+        "like",
+        post._id
+      );
+    }
 
     res.status(200).send(post);
   })
@@ -175,6 +198,15 @@ router.post(
         new: true,
       }
     );
+
+    if (!deletedPost) {
+      await Notification.insertNotification(
+        post.postedBy,
+        req.session.user._id,
+        "retweet",
+        post._id
+      );
+    }
 
     res.status(200).send(post);
   })
