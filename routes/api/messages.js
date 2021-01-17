@@ -3,6 +3,7 @@ import asyncHandler from "express-async-handler";
 import User from "../../models/userModel.js";
 import Message from "../../models/messageModel.js";
 import Chat from "../../models/chatModel.js";
+import Notification from "../../models/notificationModel.js";
 
 const router = express.Router();
 
@@ -26,10 +27,27 @@ router.post(
     message = await message.populate("chat").execPopulate();
     message = await User.populate(message, { path: "chat.users" });
 
-    Chat.findByIdAndUpdate(req.body.chatId, { latestMessage: message });
+    let chat = await Chat.findByIdAndUpdate(req.body.chatId, {
+      latestMessage: message,
+    });
+
+    insertNotifications(chat, message);
 
     res.status(201).send(message);
   })
 );
+
+function insertNotifications(chat, message) {
+  chat.users.forEach((userId) => {
+    if (userId == message.sender._id.toString()) return;
+
+    Notification.insertNotification(
+      userId,
+      message.sender._id,
+      "newMessage",
+      message.chat._id
+    );
+  });
+}
 
 export default router;
