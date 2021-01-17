@@ -13,6 +13,7 @@ import profileRouter from "./routes/profileRoutes.js";
 import uploadRouter from "./routes/uploadRoutes.js";
 import searchRouter from "./routes/searchRoutes.js";
 import messagesRouter from "./routes/messagesRoutes.js";
+import notificationsRouter from "./routes/notificationsRoute.js";
 
 import { fileURLToPath } from "url";
 import { dirname } from "path";
@@ -75,6 +76,7 @@ app.use("/profile", requireLogin, profileRouter);
 app.use("/uploads", uploadRouter);
 app.use("/search", requireLogin, searchRouter);
 app.use("/messages", requireLogin, messagesRouter);
+app.use("/notifications", requireLogin, notificationsRouter);
 
 const PORT = process.env.PORT || 5000;
 
