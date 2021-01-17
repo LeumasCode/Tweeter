@@ -7,6 +7,7 @@ import asyncHandler from "express-async-handler";
 import User from "../../models/userModel.js";
 import Post from "../../models/postModel.js";
 import multer from "multer";
+import Notification from "../../models/notificationModel.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -59,6 +60,10 @@ router.put("/:userId/follow", async (req, res, next) => {
   await User.findByIdAndUpdate(userId, {
     [option]: { followers: req.session.user._id },
   }); //
+
+  if(!isFollowing){
+    await Notification.insertNotification(userId, req.session.user._id, 'follow', req.session.user._id)
+  }
 
   res.status(200).send(req.session.user);
 });
