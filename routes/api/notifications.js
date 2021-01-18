@@ -10,8 +10,16 @@ const router = express.Router();
 router.get(
   "/",
   asyncHandler(async (req, res, next) => {
-    res.status(200).send('it works')
-  }
-))
+    const notification = await Notification.find({
+      userTo: req.session.user._id,
+      notificationType: { $ne: "newMessage" },
+    })
+      .populate("userTo")
+      .populate("userFrom")
+      .sort({ createdAt: -1 });
+
+    res.status(200).send(notification);
+  })
+);
 
 export default router;

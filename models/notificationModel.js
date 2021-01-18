@@ -13,7 +13,7 @@ const notificationSchema = new mongoose.Schema(
       ref: "User",
     },
 
-    NotificationType: String,
+    notificationType: String,
 
     opened: {
       type: Boolean,
@@ -30,14 +30,14 @@ const notificationSchema = new mongoose.Schema(
 notificationSchema.statics.insertNotification = async(
   userTo,
   userFrom,
-  NotificationType,
+  notificationType,
   entityId
 ) => {
     
   let data = {
     userTo,
     userFrom,
-    NotificationType,
+    notificationType,
     entityId,
   };
 
