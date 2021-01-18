@@ -798,3 +798,8 @@ nav a.blue {
   width: 50%;
   max-width: 75px;
 }
+
+.resultListItem.active{
+  background-color: var(--blueBackground);
+  
+}

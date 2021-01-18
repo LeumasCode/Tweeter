@@ -19,11 +19,13 @@ function outputNotificationList(notifications, container) {
 function createNotificationHtml(notification) {
   let userFrom = notification.userFrom;
 
-  let text = getNotificationText(notification)
+  let text = getNotificationText(notification);
 
-  let href = getNotificationUrl(notification)
+  let href = getNotificationUrl(notification);
 
-  return `<a href='${href}' class='resultListItem notification'>
+  let className = notification.opened ? "" : "active";
+
+  return `<a href='${href}' class='resultListItem notification ${className}'>
             <div class='resultsImageContainer'>
                 <img src='${userFrom.image}'>
                 
@@ -58,11 +60,8 @@ function getNotificationText(notification) {
   return `<span class='ellipsis'>${text}</span>`;
 }
 
-
 function getNotificationUrl(notification) {
-  
-
-  let url = '#';
+  let url = "#";
 
   if (
     notification.notificationType == "retweet" ||
@@ -70,7 +69,7 @@ function getNotificationUrl(notification) {
     notification.notificationType == "reply"
   ) {
     url = `/posts/${notification.entityId}`;
-  }  else if (notification.notificationType == "follow") {
+  } else if (notification.notificationType == "follow") {
     url = `/profile/${notification.entityId}`;
   }
 
