@@ -660,5 +660,6 @@ function messageReceived(newMessage) {
 function markNotificationsAsOpened(notificationId = null, callback = null) {
   if (callback == null) callback = () => location.reload();
 
-  let url =notificationId != null ? "http://localhost:5000/"
+  let url =notificationId != null ? `http://localhost:5000/api/notifications/${notificationId}/markAsOpened` : `http://localhost:5000/api/notifications/markAsOpened`
+
 }
