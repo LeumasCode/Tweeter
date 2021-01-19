@@ -649,14 +649,16 @@ function getOtherChatUsers(users) {
   return users.filter((user) => user._id != userLoggedIn._id);
 }
 
+function messageReceived(newMessage) {
+  if ($(".chatContainer").length == 0) {
+    // show pop up notification
+  } else {
+    addChatMessageHtml(newMessage);
+  }
+}
 
+function markNotificationsAsOpened(notificationId = null, callback = null) {
+  if (callback == null) callback = () => location.reload();
 
-function messageReceived(newMessage){
-
-    if($('.chatContainer').length == 0){
-      // show pop up notification
-    }else{
-      addChatMessageHtml(newMessage)
-    }
-
+  let url =notificationId != null ? "http://localhost:5000/"
 }
