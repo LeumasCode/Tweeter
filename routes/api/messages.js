@@ -37,6 +37,7 @@ router.post(
   })
 );
 
+
 function insertNotifications(chat, message) {
   chat.users.forEach((userId) => {
     if (userId == message.sender._id.toString()) return;
@@ -49,5 +50,10 @@ function insertNotifications(chat, message) {
     );
   });
 }
+
+
+
+
+
 
 export default router;

@@ -22,4 +22,15 @@ router.get(
   })
 );
 
+router.put(
+  "/",
+  asyncHandler(async (req, res, next) => {
+    const notification = await Notification.findByIdAndUpdate(req.params.id, {
+      opened: true,
+    });
+
+    res.sendStatus(204);
+  })
+);
+
 export default router;
