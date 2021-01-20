@@ -3,6 +3,10 @@ let cropper;
 let timer;
 let selectedUsers = [];
 
+$(document).ready(() => {
+  refreshMessagesBadge();
+});
+
 $("#postTextarea, #replyTextarea").keyup((event) => {
   const textBox = $(event.target);
   const value = textBox.val().trim();
@@ -338,21 +342,21 @@ $(document).on("click", ".followButton", (event) => {
   });
 });
 
-$(document).on('click', '.notification.active', (e)=>{
+$(document).on("click", ".notification.active", (e) => {
   let container = $(e.target);
 
-  let notificationId = container.data().id
+  let notificationId = container.data().id;
 
-  let href = container.attr('href')
+  let href = container.attr("href");
 
   e.preventDefault();
 
-  let callback = () => window.location = href;
+  let callback = () => (window.location = href);
 
-  console.log(notificationId)
+  console.log(notificationId);
 
-  markNotificationsAsOpened(notificationId, callback)
-})
+  markNotificationsAsOpened(notificationId, callback);
+});
 
 function getPostIdFromElement(element) {
   const isRoot = element.hasClass("post");
@@ -675,14 +679,22 @@ function messageReceived(newMessage) {
 
 function markNotificationsAsOpened(notificationId = null, callback = null) {
   if (callback == null) callback = () => location.reload();
-  console.log(notificationId)
+  console.log(notificationId);
 
-  let url = notificationId != null ? `http://localhost:5000/api/notifications/${notificationId}/markAsOpened` : `http://localhost:5000/api/notifications/markAsOpened`
+  let url =
+    notificationId != null
+      ? `http://localhost:5000/api/notifications/${notificationId}/markAsOpened`
+      : `http://localhost:5000/api/notifications/markAsOpened`;
 
   $.ajax({
     url,
-    type: 'PUT',
-    success: ()=> callback()
-    
-  })
+    type: "PUT",
+    success: () => callback(),
+  });
+}
+
+function refreshMessagesBadge() {
+  $.get("http://localhost:5000/api/chats", { unreadOnly: true }, (data) => {
+    console.log(data.length);
+  });
 }
