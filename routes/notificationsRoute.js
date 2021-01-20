@@ -15,4 +15,6 @@ router.get("/", async (req, res, next) => {
   res.status(200).render("notificationsPage", payload);
 });
 
+
+
 export default router;

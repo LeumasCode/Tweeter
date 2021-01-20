@@ -23,7 +23,7 @@ router.get(
 );
 
 router.put(
-  "/",
+  "/:id/markAsOpened",
   asyncHandler(async (req, res, next) => {
     const notification = await Notification.findByIdAndUpdate(req.params.id, {
       opened: true,
