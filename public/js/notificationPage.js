@@ -4,6 +4,8 @@ $(document).ready(() => {
   });
 });
 
+$("#markNotificationsAsRead").click(() => markNotificationsAsOpened());
+
 function outputNotificationList(notifications, container) {
   notifications.forEach((notification) => {
     let html = createNotificationHtml(notification);
@@ -25,7 +27,7 @@ function createNotificationHtml(notification) {
 
   let className = notification.opened ? "" : "active";
 
-  console.log(notification._id)
+  console.log(notification._id);
 
   return `<a href='${href}' class='resultListItem notification ${className}' data-id='${notification._id}'>
             <div class='resultsImageContainer'>

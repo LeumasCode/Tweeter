@@ -33,4 +33,18 @@ router.put(
   })
 );
 
+router.put(
+  "/markAsOpened",
+  asyncHandler(async (req, res, next) => {
+    const notification = await Notification.updateMany(
+      { userTo: req.session.user._id },
+      {
+        opened: true,
+      }
+    );
+
+    res.sendStatus(204);
+  })
+);
+
 export default router;
