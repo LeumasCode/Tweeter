@@ -52,7 +52,9 @@ router.get(
 
     if (req.query.unreadOnly !== undefined && req.query.unreadOnly == "true") {
       chats = chats.filter(
-        (chat) => !chat.latestMessage.readBy.includes(req.session.user._id)
+        (chat) =>
+          chat.latestMessage &&
+          !chat.latestMessage.readBy.includes(req.session.user._id)
       );
     }
 
@@ -92,7 +94,7 @@ router.put(
       { $addToSet: { readBy: req.session.user._id } }
     );
 
-    res.sendStatus(204)
+    res.sendStatus(204);
   })
 );
 

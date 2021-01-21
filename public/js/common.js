@@ -681,10 +681,8 @@ function getOtherChatUsers(users) {
 
 function messageReceived(newMessage) {
   if ($(".chatContainer").length == 0) {
-
     // show pop up notification
-    showMessagePopup(newMessage)
-
+    showMessagePopup(newMessage);
   } else {
     addChatMessageHtml(newMessage);
   }
@@ -744,17 +742,17 @@ function showNotificationPopup(data) {
   let html = createNotificationHtml(data);
 
   let element = $(html);
-  element.hide().prependTo("#notificationList").slideDown('fast');
+  element.hide().prependTo("#notificationList").slideDown("fast");
 
-   setTimeout(() => {
-     element.fadeOut(400);
-   }, 5000);
+  setTimeout(() => {
+    element.fadeOut(400);
+  }, 5000);
 }
 
 function showMessagePopup(data) {
-if(!data.chat.latestMessage._id){
-  data.chat.latestMessage = data
-}
+  if (!data.chat.latestMessage._id) {
+    data.chat.latestMessage = data;
+  }
 
   let html = createChatHtml(data.chat);
 
@@ -840,13 +838,18 @@ function getNotificationUrl(notification) {
   return url;
 }
 
-
 function createChatHtml(chatData) {
   let chatName = getChatName(chatData);
   let image = getChatImageElements(chatData);
   let latestMessage = getLatestMessage(chatData.latestMessage);
 
-  return `<a href='/messages/${chatData._id}' class='resultListItem'>
+  let activeClass =
+    !chatData.latestMessage ||
+    chatData.latestMessage.readBy.includes(userLoggedIn._id)
+      ? ""
+      : "active";
+
+  return `<a href='/messages/${chatData._id}' class='resultListItem ${activeClass}'>
             ${image}
             <div class='resultsDetailsContainer ellipsis'>
                 <span class='heading ellipsis'>${chatName}</span>
