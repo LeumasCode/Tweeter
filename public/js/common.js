@@ -5,6 +5,8 @@ let selectedUsers = [];
 
 $(document).ready(() => {
   refreshMessagesBadge();
+
+  refreshNotificationsBadge();
 });
 
 $("#postTextarea, #replyTextarea").keyup((event) => {
@@ -675,6 +677,8 @@ function messageReceived(newMessage) {
   } else {
     addChatMessageHtml(newMessage);
   }
+
+  refreshMessagesBadge();
 }
 
 function markNotificationsAsOpened(notificationId = null, callback = null) {
@@ -695,6 +699,32 @@ function markNotificationsAsOpened(notificationId = null, callback = null) {
 
 function refreshMessagesBadge() {
   $.get("http://localhost:5000/api/chats", { unreadOnly: true }, (data) => {
-    console.log(data.length);
+    let numResults = data.length;
+
+    console.log(numResults);
+
+    if (numResults > 0) {
+      $("#messagesBadge").text(numResults).addClass("active");
+    } else {
+      $("#messagesBadge").text("").removeClass("active");
+    }
   });
+}
+
+function refreshNotificationsBadge() {
+  $.get(
+    "http://localhost:5000/api/notifications",
+    { unreadOnly: true },
+    (data) => {
+      let numResults = data.length;
+
+      console.log(numResults);
+
+      if (numResults > 0) {
+        $("#notificationsBadge").text(numResults).addClass("active");
+      } else {
+        $("#notificationsBadge").text("").removeClass("active");
+      }
+    }
+  );
 }

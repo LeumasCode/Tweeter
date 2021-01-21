@@ -10,10 +10,16 @@ const router = express.Router();
 router.get(
   "/",
   asyncHandler(async (req, res, next) => {
-    const notification = await Notification.find({
+    let searchObj = {
       userTo: req.session.user._id,
       notificationType: { $ne: "newMessage" },
-    })
+    };
+
+    if (req.query.unreadOnly !== undefined && req.query.unreadOnly == "true") {
+      searchObj.opened = false;
+    }
+
+    const notification = await Notification.find(searchObj)
       .populate("userTo")
       .populate("userFrom")
       .sort({ createdAt: -1 });
