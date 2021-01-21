@@ -681,7 +681,10 @@ function getOtherChatUsers(users) {
 
 function messageReceived(newMessage) {
   if ($(".chatContainer").length == 0) {
+
     // show pop up notification
+    showMessagePopup(newMessage)
+
   } else {
     addChatMessageHtml(newMessage);
   }
@@ -746,6 +749,21 @@ function showNotificationPopup(data) {
    setTimeout(() => {
      element.fadeOut(400);
    }, 5000);
+}
+
+function showMessagePopup(data) {
+if(!data.chat.latestMessage._id){
+  data.chat.latestMessage = data
+}
+
+  let html = createChatHtml(data.chat);
+
+  let element = $(html);
+  element.hide().prependTo("#notificationList").slideDown("fast");
+
+  setTimeout(() => {
+    element.fadeOut(400);
+  }, 5000);
 }
 
 function outputNotificationList(notifications, container) {
@@ -820,4 +838,52 @@ function getNotificationUrl(notification) {
   }
 
   return url;
+}
+
+
+function createChatHtml(chatData) {
+  let chatName = getChatName(chatData);
+  let image = getChatImageElements(chatData);
+  let latestMessage = getLatestMessage(chatData.latestMessage);
+
+  return `<a href='/messages/${chatData._id}' class='resultListItem'>
+            ${image}
+            <div class='resultsDetailsContainer ellipsis'>
+                <span class='heading ellipsis'>${chatName}</span>
+                <span class='subText ellipsis'>${latestMessage}</span>
+            </div>
+
+        </a>`;
+}
+
+function getLatestMessage(latestMessage) {
+  if (latestMessage != null) {
+    let sender = latestMessage.sender;
+
+    return `${sender.firstName} ${sender.lastName}: ${latestMessage.content}`;
+  }
+
+  return "New Chat";
+}
+
+function getChatImageElements(chatData) {
+  let otherChatUsers = getOtherChatUsers(chatData.users);
+
+  let groupChatClass = "";
+
+  let chatImage = getUserChatImageElement(otherChatUsers[0]);
+
+  if (otherChatUsers.length > 1) {
+    groupChatClass = "groupChatImage";
+    chatImage += getUserChatImageElement(otherChatUsers[1]);
+  }
+  return `<div class='resultsImageContainer ${groupChatClass}'>${chatImage}</div>`;
+}
+
+function getUserChatImageElement(user) {
+  console.log(user);
+  if (!user || !user.image) {
+    return alert("User passed into function is invalid");
+  }
+  return `<image src='${user.image}' alt='Users profile pic'></image>`;
 }
