@@ -108,6 +108,11 @@ socketio.on("connection", (socket) => {
     socket.emit("stop typing");
   });
 
+  socket.on("notification received", (room) => {
+    socket.in(room);
+    socket.emit("notification received");
+  });
+
   socket.on("new message", (newMessage) => {
     let chat = newMessage.chat;
 
