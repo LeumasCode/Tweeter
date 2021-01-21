@@ -680,7 +680,7 @@ function getOtherChatUsers(users) {
 }
 
 function messageReceived(newMessage) {
-  if ($(".chatContainer").length == 0) {
+  if ($(`[data-room="${newMessage.chat._id}"]`).length == 0) {
     // show pop up notification
     showMessagePopup(newMessage);
   } else {
