@@ -13,8 +13,9 @@ socket.on("message received", (newMessage ) => {
  return messageReceived(newMessage)
 });
 
-socket.on("notification received", (newNotification) =>{
+socket.on("notification received", () =>{
   $.get('http://localhost:5000/api/notifications/latest', (notificationData)=>{
+    showNotificationPopup(notificationData)
     refreshNotificationsBadge()
   })
 })

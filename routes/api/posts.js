@@ -99,19 +99,18 @@ router.post(
       replyTo,
     });
 
-    post = await User.populate( post, {path: 'postedBy'})
+    post = await User.populate(post, { path: "postedBy" });
 
-    post = await Post.populate(post, { path: "replyTo" })
+    post = await Post.populate(post, { path: "replyTo" });
 
-
-     if (post.replyTo !== undefined) {
-       await Notification.insertNotification(
-         post.replyTo.postedBy,
-         req.session.user._id,
-         "reply",
-         post._id
-       );
-     }
+    if (post.replyTo !== undefined) {
+      await Notification.insertNotification(
+        post.replyTo.postedBy,
+        req.session.user._id,
+        "reply",
+        post._id
+      );
+    }
     res.status(201).send(post);
   })
 );
