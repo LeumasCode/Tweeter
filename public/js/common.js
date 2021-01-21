@@ -741,7 +741,7 @@ function showNotificationPopup(data) {
   let html = createNotificationHtml(data);
 
   let element = $(html);
-  element.prependTo("#notificationList");
+  element.hide().prependTo("#notificationList").slideDown('fast');
 
    setTimeout(() => {
      element.fadeOut(400);
