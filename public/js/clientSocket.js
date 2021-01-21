@@ -14,7 +14,9 @@ socket.on("message received", (newMessage ) => {
 });
 
 socket.on("notification received", (newNotification) =>{
-  console.log('new notification');
+  $.get('http://localhost:5000/api/notifications/latest', (notificationData)=>{
+    refreshNotificationsBadge()
+  })
 })
 
 function emitNotification(userId){

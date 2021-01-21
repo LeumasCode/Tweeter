@@ -28,6 +28,21 @@ router.get(
   })
 );
 
+router.get(
+  "/latest",
+  asyncHandler(async (req, res, next) => {
+
+    const notification = await Notification.findOne({
+      userTo: req.session.user._id,
+    })
+      .populate("userTo")
+      .populate("userFrom")
+      .sort({ createdAt: -1 });
+
+    res.status(200).send(notification);
+  })
+);
+
 router.put(
   "/:id/markAsOpened",
   asyncHandler(async (req, res, next) => {
