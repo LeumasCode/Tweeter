@@ -32,7 +32,7 @@ const postSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Post",
     },
-    pinned: Boolean,
+   
   },
   { timestamps: true }
 );
